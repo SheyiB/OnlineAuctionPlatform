@@ -1,0 +1,14 @@
+{
+  "name": "auctionapp",
+  "version": "1.0.1",
+  "description": "An app that creates a personalised auction marketplace for auctioneers",
+  "main": "server.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "auction"
+  ],
+  "author": "Elijah Oluwaseyifunmi Banjo",
+  "license": "ISC"
+}
