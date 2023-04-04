@@ -6,4 +6,5 @@ export interface Auctioneer{
     email: string;
     phone: number;
     password: string;
+    market: [];
 }
