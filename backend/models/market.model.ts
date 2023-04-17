@@ -3,5 +3,5 @@ import {Bidders} from './bidder.model'
 
 export interface Market{
     auction : [Auction],
-    bidders : [Bidders]
+    id: string
 }

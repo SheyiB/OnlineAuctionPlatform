@@ -1,3 +1,4 @@
+import {Bidders} from './bidder.model'
 
 export interface Auction{
     image: string,
@@ -8,5 +9,6 @@ export interface Auction{
     date: Date,
     winner: string,
     startingPrice: number,
-    leadingBid: number
+    leadingBid: number,
+    bidders: [Bidders]
 }
