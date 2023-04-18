@@ -1,4 +1,5 @@
 import {Schema, model} from 'mongoose';
+import {Market} from './market.model'
 
 export interface Auctioneer{
     firstname: string;
@@ -6,5 +7,5 @@ export interface Auctioneer{
     email: string;
     phone: number;
     password: string;
-    market: [];
+    market: Market;
 }
