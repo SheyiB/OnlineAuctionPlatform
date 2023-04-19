@@ -8,4 +8,5 @@ export interface Auctioneer{
     phone: number;
     password: string;
     market: Market;
+    date: Date;
 }
