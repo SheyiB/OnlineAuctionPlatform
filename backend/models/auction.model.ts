@@ -9,6 +9,6 @@ export interface Auction{
     date: Date,
     winner: string,
     startingPrice: number,
-    leadingBid: number,
+    leadingBid: [bid: number, bidder: string],
     bidders: [Bidders]
 }
