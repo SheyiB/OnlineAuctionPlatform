@@ -1,1 +1,1 @@
-import {} from '../models/user.model'
+import {Auctioneer} from '../models/auctionner.model'
