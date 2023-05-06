@@ -10,3 +10,18 @@ export interface Auctioneer{
     market: Market;
     date: Date;
 }
+
+const auctioneerSchema = new Schema<Auctioneer>({
+    firstname: {type: String, required: true},
+    lastname: {type: String, required: true},
+    email: {type: String, required: true},
+    phone: {type: Number, required: true},
+    password: {type: String, required: true},
+    date: {type: Date, required: true},
+    market: {type: Schema.Types.ObjectId, ref: 'Market' }
+},
+{
+    timestamps: true
+})
+
+export const Auctioneer = model<Auctioneer>('Auctioneer', auctioneerSchema)
