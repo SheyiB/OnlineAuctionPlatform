@@ -58,4 +58,4 @@ AuctioneerSchema.methods.matchPassword = async function(enteredPassword: string 
 
 
 
-export const Auctioneer = model<AuctioneerType>('Auctioneer', AuctioneerSchema)
+export const Auctioneer = model<AuctioneerData>('Auctioneer', AuctioneerSchema)
