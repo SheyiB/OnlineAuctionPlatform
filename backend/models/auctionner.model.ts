@@ -11,7 +11,7 @@ export interface AuctioneerType{
     date: Date;
 }
 
-const auctioneerSchema = new Schema<AuctioneerType>({
+const AuctioneerSchema = new Schema<AuctioneerType>({
     firstname: {type: String, required: true},
     lastname: {type: String, required: true},
     email: {type: String, required: true},
@@ -24,4 +24,29 @@ const auctioneerSchema = new Schema<AuctioneerType>({
     timestamps: true
 })
 
-export const Auctioneer = model<AuctioneerType>('Auctioneer', auctioneerSchema)
+
+// For Saftey -> Before saving Encrypt Password using bcrypt
+AuctioneerSchema.pre('save', async function(next){
+    if(!this.isModified('password')){
+        next();
+    }
+    const salt = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(this.password, salt);
+
+});
+
+// For Session Mgt -> Create a method that creates a Signed JWT using the user id for session Mgt
+AuctioneerSchema.methods.getSignedJwtToken = function() {
+    return jwt.sign( {id: this._id}, process.env.JWT_SECRET!, {
+        expiresIn: process.env.JWT_EXPIRE
+    })
+}
+
+// A Method that Checkes if Entered Password equals Hashed Password
+AuctioneerSchema.methods.matchPassword = async function(enteredPassword: string ){
+    return await bcrypt.compare(enteredPassword, this.password);
+}
+
+
+
+export const Auctioneer = model<AuctioneerType>('Auctioneer', AuctioneerSchema)
