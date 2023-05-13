@@ -20,6 +20,12 @@ export interface AuctioneerData extends AuctioneerType {
 }
 
 
+export interface AuctioneerLogin {
+    email: string,
+    password: string
+}
+
+
 const AuctioneerSchema = new Schema<AuctioneerType>({
     firstname: {type: String, required: true},
     lastname: {type: String, required: true},

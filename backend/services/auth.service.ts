@@ -1,19 +1,20 @@
-import {Auctioneer} from '../models/auctionner.model'
+import {Auctioneer, AuctioneerType,AuctioneerData, AuctioneerLogin} from '../models/auctionner.model'
+
 
 export class AuthService{
-	signUp (body: Auctioneer){
-        return new Promise<{user: UserData, token: string}>(async(resolve, reject) => {
+	signUp (body: AuctioneerType){
+        return new Promise<{auctioneer: AuctioneerType, token: string}>(async(resolve, reject) => {
             try{
-                let existingUser = await User.find({email : body.email})
+                let existingUser = await Auctioneer.find({email : body.email})
 
                 if(existingUser.length > 0){
-                    return reject({code : 400, message: "User Exist!"})
+                    return reject({code : 400, message: "Auctioneer Exist!"})
                 }
-                const user: UserData = await User.create(body);
+                const auctioneer: AuctioneerData = await Auctioneer.create(body);
                 
-                const token = user.getSignedJwtToken();
+                const token = auctioneer.getSignedJwtToken();
 
-                return resolve({user, token});
+                return resolve({auctioneer, token});
             }
             catch (e: any){
                 if(e.message.includes('validation failed')){
@@ -25,32 +26,32 @@ export class AuthService{
         })
     }
 
-    login (body: UserLogin) {
-        return new Promise<{user: string, token: string}>(async(resolve, reject) => {
+    login (body: AuctioneerLogin) {
+        return new Promise<{auctioneer: string, token: string}>(async(resolve, reject) => {
             try{
                 
                 const {email, password} = body;
                 
-                const user : UserData | any= await User.findOne({email: email}).select('+password');
+                const auctioneer : AuctioneerData | any= await Auctioneer.findOne({email: email}).select('+password');
 
                
-                if (!user) reject('FALSE-INFO!');
+                if (!auctioneer) reject('FALSE-INFO!');
 
- 				const isMatch =  await user.matchPassword(password); 
+ 				const isMatch =  await auctioneer.matchPassword(password); 
                 if(!isMatch) reject({status: 401, message:'Invalid Inforamtion Supplied!'});
 
-                user.password = undefined;
+                auctioneer.password = undefined;
 
-                const token: string = user.getSignedJwtToken();
+                const token: string = auctioneer.getSignedJwtToken();
 
-                if(!token) reject ('Could not Sign In User');
+                if(!token) reject ('Could not Sign In Auctioneer');
                 
 
 
-                resolve({user, token} )
+                resolve({auctioneer, token} )
             }
             catch(e : any){
-                e.source = 'Get User Service';
+                e.source = 'Get Auctioneer Service';
                 return reject(e)
             }
         })
