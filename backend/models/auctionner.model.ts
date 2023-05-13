@@ -1,5 +1,7 @@
 import {Schema, model} from 'mongoose';
-import {Market} from './market.model'
+import {Market} from './market.model';
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 
 export interface AuctioneerType{
     firstname: string;
