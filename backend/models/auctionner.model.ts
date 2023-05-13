@@ -1,7 +1,7 @@
 import {Schema, model} from 'mongoose';
 import {Market} from './market.model'
 
-export interface Auctioneer{
+export interface AuctioneerType{
     firstname: string;
     lastname: string;
     email: string;
@@ -11,7 +11,7 @@ export interface Auctioneer{
     date: Date;
 }
 
-const auctioneerSchema = new Schema<Auctioneer>({
+const auctioneerSchema = new Schema<AuctioneerType>({
     firstname: {type: String, required: true},
     lastname: {type: String, required: true},
     email: {type: String, required: true},
