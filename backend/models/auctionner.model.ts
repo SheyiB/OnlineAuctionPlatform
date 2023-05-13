@@ -13,6 +13,13 @@ export interface AuctioneerType{
     date: Date;
 }
 
+
+export interface AuctioneerData extends AuctioneerType {
+    getSignedJwtToken : () => string;
+    matchPassword : () => string;    
+}
+
+
 const AuctioneerSchema = new Schema<AuctioneerType>({
     firstname: {type: String, required: true},
     lastname: {type: String, required: true},
