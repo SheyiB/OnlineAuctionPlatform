@@ -24,4 +24,4 @@ const auctioneerSchema = new Schema<AuctioneerType>({
     timestamps: true
 })
 
-export const Auctioneer = model<Auctioneer>('Auctioneer', auctioneerSchema)
+export const Auctioneer = model<AuctioneerType>('Auctioneer', auctioneerSchema)
