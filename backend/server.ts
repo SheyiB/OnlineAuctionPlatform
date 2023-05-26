@@ -22,6 +22,8 @@ const PORT: number = parseInt(process.env.PORT as string, 10);
 
 const app = express();
 
+app.use(express.json());
+
 app.use('/auction-api/auth',authRouter)
 
 app.get('/*', (req, res)=>{
