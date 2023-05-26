@@ -1,8 +1,15 @@
+//import Node packages
 import express from 'express';
 import * as dotenv from "dotenv";
 import {db} from './db';
 
+//import routes
+import {authRouter} from './routes/auth.routes'
+
+//setup config
 dotenv.config();
+
+//instantiate Database
 db();
 
 
@@ -14,6 +21,8 @@ if (!process.env.PORT){
 const PORT: number = parseInt(process.env.PORT as string, 10);
 
 const app = express();
+
+app.use('/auction-api/auth',authRouter)
 
 app.get('/*', (req, res)=>{
     res.send("Welcome To My Application")

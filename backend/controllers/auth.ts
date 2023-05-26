@@ -8,6 +8,7 @@ export const signUp = async (req: Request, res: Response) =>{
         const auctioneer = await auth.signUp(req.body);
         return res.status(201).json(auctioneer)
     }  catch(e : any){
+        console.log('Error is ',e)
         return res.status(e.code? e.code : 500).json({success: false, message: e.message})
     }
 }

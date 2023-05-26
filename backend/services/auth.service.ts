@@ -20,6 +20,7 @@ export class AuthService{
                 if(e.message.includes('validation failed')){
                     return reject({code: 400, message: e.message})
                 }
+                
                 e.source = 'Sign-Up Service';
                 return reject(e)
             }
