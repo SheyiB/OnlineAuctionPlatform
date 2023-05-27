@@ -10,7 +10,6 @@ export interface AuctioneerType{
     phone: number;
     password: string;
     market: Market;
-    date: Date;
 }
 
 
@@ -32,7 +31,6 @@ const AuctioneerSchema = new Schema<AuctioneerType>({
     email: {type: String, required: true},
     phone: {type: Number, required: true},
     password: {type: String, required: true},
-    date: {type: Date, required: true},
     market: {type: Schema.Types.ObjectId, ref: 'Market' }
 },
 {
