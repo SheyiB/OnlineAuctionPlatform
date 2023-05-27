@@ -2,14 +2,14 @@ import {Auction} from './auction.model'
 import {Schema, model} from 'mongoose';
 import {AuctioneerType} from './auctionner.model'
 
-export interface Market{
+export interface MarketType{
     auction : [Auction],
     id: string,
     owner: AuctioneerType
 }
 
 
-const marketSchema = new Schema<Market>({
+const marketSchema = new Schema<MarketType>({
     id: {type: String, required: true},
     auction: [{type: Schema.Types.ObjectId, ref:'Auction'}],
     owner: {type: Schema.Types.ObjectId, ref:'Auctioneer'},
@@ -18,5 +18,5 @@ const marketSchema = new Schema<Market>({
     timestamps: true
 })
 
-export const Market = model<Market>('Market', marketSchema )
+export const Market = model<MarketType>('Market', marketSchema )
 
