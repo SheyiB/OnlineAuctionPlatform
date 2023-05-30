@@ -1,7 +1,7 @@
 import {Bidders} from './bidder.model';
 import {Schema, model} from 'mongoose';
 
-export interface Auction{
+export interface AuctionType{
     image: string,
     item : string,
     auctionType: string,
@@ -14,7 +14,7 @@ export interface Auction{
     bidders: [Bidders]
 }
 
-const auctionSchema = new Schema<Auction>({
+const auctionSchema = new Schema<AuctionType>({
     image: {type: String, required: true},
     item: {type: String, required: true},
     auctionType: {type: String, required: true},
@@ -29,4 +29,4 @@ const auctionSchema = new Schema<Auction>({
     timestamps: true
 })
 
-export const Auction = model<Auction>('Auction', auctionSchema)
+export const Auction = model<AuctionType>('Auction', auctionSchema)
