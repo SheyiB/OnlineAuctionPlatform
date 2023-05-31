@@ -1,9 +1,9 @@
-import {Auction} from './auction.model'
+import {AuctionType} from './auction.model'
 import {Schema, model} from 'mongoose';
 import {AuctioneerType} from './auctionner.model'
 
 export interface MarketType{
-    auction : [Auction],
+    auction : [AuctionType],
     id: string,
     owner: AuctioneerType
 }
