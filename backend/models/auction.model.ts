@@ -1,5 +1,5 @@
 import {Bidders} from './bidder.model';
-import {Schema, model} from 'mongoose';
+import {Schema, model, Types} from 'mongoose';
 
 export interface AuctionType{
     image: string,
@@ -11,7 +11,8 @@ export interface AuctionType{
     winner: string,
     startingPrice: number,
     leadingBid: [bid: number, bidder: string],
-    bidders: [Bidders]
+    bidders: [Bidders],
+    owner: Types.ObjectId
 }
 
 const auctionSchema = new Schema<AuctionType>({
@@ -23,7 +24,8 @@ const auctionSchema = new Schema<AuctionType>({
     winner: {type: String, required: true},
     date: {type: Date, required: true},
     leadingBid: [ ],
-    bidders: [{type: Schema.Types.ObjectId, ref: 'Bidders' }]
+    bidders: [{type: Schema.Types.ObjectId, ref: 'Bidders' }],
+    owner: {type: Schema.Types.ObjectId, ref: 'Auctioneer' , required: true}
 },
 {
     timestamps: true
