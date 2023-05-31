@@ -22,5 +22,43 @@ export class AuctionServie{
         })
     }
 
+    getAuction (id: string ){
+        return new Promise<{auction: AuctionType| null}>(async(resolve, reject) =>{
+            try{
+                const auction: AuctionType | null = await Auction.findById(id);
+
+                return resolve({auction})
+            }
+            catch(e: any){
+                if(e.message.includes('validation failed')){
+                    return reject({code: 400, message: e.message})
+                }
+                
+                e.source = 'Get Auction Service';
+                return reject(e)
+            }
+
+        })
+    }
+
+    getAuctioneersAuctions (id: string){
+        return new Promise<{auction: AuctionType[]| null}>(async(resolve, reject) =>{
+            try{
+                const auction: AuctionType[] | null = await Auction.find({owner: id});
+
+                return resolve({auction})
+            }
+            catch(e: any){
+                if(e.message.includes('validation failed')){
+                    return reject({code: 400, message: e.message})
+                }
+                
+                e.source = 'Get Auction Service';
+                return reject(e)
+            }
+
+        })
+    }
+
 
 }
