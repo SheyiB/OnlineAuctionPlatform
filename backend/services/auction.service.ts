@@ -60,5 +60,23 @@ export class AuctionServie{
         })
     }
 
+    deleteAuction (id: string ){
+        return new Promise<{auction: null}>(async(resolve, reject) =>{
+            try{
+                const auction: null = await Auction.findByIdAndDelete(id);
+
+                return resolve({auction})
+            }
+            catch(e: any){
+                if(e.message.includes('validation failed')){
+                    return reject({code: 400, message: e.message})
+                }
+                
+                e.source = 'Delete Auction Service';
+                return reject(e)
+            }
+
+        })
+    }
 
 }
