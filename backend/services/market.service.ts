@@ -23,6 +23,25 @@ export class MarketServie{
         })
     }
 
+    updateMarket ( id:string, body: MarketType ){
+        return new Promise<{market: MarketType|null}>(async(resolve, reject) =>{
+            try{
+                const market: MarketType | null = await Market.findByIdAndUpdate(id, body, {runValidators : true, new: true});
+
+                return resolve({market})
+            }
+            catch(e: any){
+                if(e.message.includes('validation failed')){
+                    return reject({code: 400, message: e.message})
+                }
+                
+                e.source = 'Delete Market Service';
+                return reject(e)
+            }
+
+        })
+    }
+
 
     deleteMarket (id: string ){
         return new Promise<{}>(async(resolve, reject) =>{
