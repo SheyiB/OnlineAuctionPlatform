@@ -23,6 +23,16 @@ export const updateMarket = async (req: Request, res: Response) =>{
     }
 }
 
+export const getMarket = async (req: Request, res: Response) =>{
+    try{
+        const auctioneer = await market.getMarket(req.params.id);
+        return res.status(201).json(auctioneer)
+    }  catch(e : any){
+        return res.status(e.code? e.code : 500).json({success: false, message: e.message})
+    }
+}
+
+
 
 
 export const deleteMarket = async (req: Request, res: Response) =>{
