@@ -1,9 +1,15 @@
-export const createAuction = () =>{
+import {AuctionServie} from '../services/auction.service';
 
-    return `Creating Auction`
-}
+import {Request, Response} from "express";
 
-export const UpdateAuction = () =>{
+const Auction = new AuctionServie();
 
-    return `Updating Auction`
+export const createAuction = async (req: Request, res: Response) =>{
+    try{
+        const auction = await Auction.createAuction(req.body);
+        return res.status(201).json(auction)
+    }  catch(e : any){
+        return res.status(e.code? e.code : 500).json({success: false, message: e.message})
+    }
+
 }
