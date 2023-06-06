@@ -13,3 +13,13 @@ export const createAuction = async (req: Request, res: Response) =>{
     }
 
 }
+
+export const getAuction = async (req: Request, res: Response) =>{
+    try{
+        const auction = await Auction.getAuction(req.params.id);
+        return res.status(201).json(auction)
+    }  catch(e : any){
+        return res.status(e.code? e.code : 500).json({success: false, message: e.message})
+    }
+
+}
