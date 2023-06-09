@@ -3,12 +3,12 @@ import express from 'express';
 import {createMarket, deleteMarket, getMarket, updateMarket } from '../controllers/market'
 
 
-export const authRouter = express.Router();
+export const marketRouter = express.Router();
 
-authRouter.route('/')
+marketRouter.route('/')
     .post(createMarket);
 
-authRouter.route('/:id')
+marketRouter.route('/:id')
     .delete(deleteMarket)
     .put(updateMarket)
     .get(getMarket)
