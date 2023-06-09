@@ -1,11 +1,11 @@
 import {Schema, model} from 'mongoose';
-import { Auction } from './auction.model';
+import { AuctionType } from './auction.model';
 
 export interface BidModel{
     bidOwner: string;
     bidId: string;
     bidValue: number;
-    auctionId: Auction;
+    auctionId: AuctionType;
     bidTime: Date
 }
 
