@@ -10,6 +10,7 @@ export interface AuctionType{
     date: Date,
     winner: string,
     startingPrice: number,
+    status: string
     leadingBid: [bid: number, bidder: string],
     bidders: [Bidders],
     owner: Types.ObjectId
@@ -22,6 +23,7 @@ const auctionSchema = new Schema<AuctionType>({
     categroy: {type: String, required: true},
     startingPrice: {type: Number, required: true},
     winner: {type: String, required: true},
+    status: {type: String, enum: ['pending', 'ongoing', 'completed'] ,default: 'pendng'},
     date: {type: Date, required: true},
     leadingBid: [ ],
     bidders: [{type: Schema.Types.ObjectId, ref: 'Bidders' }],
