@@ -2,13 +2,12 @@ import {MarketServie} from '../services/market.service';
 
 import {Request, Response} from "express";
 
-
-const market = new MarketServie();
+const Market = new MarketServie();
 
 export const createMarket = async (req: Request, res: Response) =>{
     try{
-        const auctioneer = await market.createMarket(req.body);
-        return res.status(201).json(auctioneer)
+        const market = await Market.createMarket(req.body);
+        return res.status(201).json(market)
     }  catch(e : any){
         return res.status(e.code? e.code : 500).json({success: false, message: e.message})
     }
@@ -16,28 +15,36 @@ export const createMarket = async (req: Request, res: Response) =>{
 
 export const updateMarket = async (req: Request, res: Response) =>{
     try{
-        const auctioneer = await market.updateMarket(req.params.id, req.body);
-        return res.status(201).json(auctioneer)
+        const market = await Market.updateMarket(req.params.id, req.body);
+        return res.status(201).json(market)
     }  catch(e : any){
         return res.status(e.code? e.code : 500).json({success: false, message: e.message})
     }
 }
 
-export const getMarket = async (req: Request, res: Response) =>{
+export const getAllMarkets = async (req: Request, res: Response) =>{
     try{
-        const auctioneer = await market.getMarket(req.params.id);
-        return res.status(201).json(auctioneer)
+        const market = await Market.getAllMarkets();
+        return res.status(201).json(market)
     }  catch(e : any){
         return res.status(e.code? e.code : 500).json({success: false, message: e.message})
     }
 }
 
 
+export const getAuctioneerMarket = async (req: Request, res: Response) =>{
+    try{
+        const market = await Market.getAuctioneerMarket(req.params.id);
+        return res.status(201).json(market)
+    }  catch(e : any){
+        return res.status(e.code? e.code : 500).json({success: false, message: e.message})
+    }
+}
 
 
 export const deleteMarket = async (req: Request, res: Response) =>{
     try{
-        await market.deleteMarket(req.body);       
+        await Market.deleteMarket(req.body);       
         return res.status(204).json({"message": "Market Deleted"});
     }  
     catch(e: any) {
