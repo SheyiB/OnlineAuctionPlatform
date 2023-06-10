@@ -26,7 +26,7 @@ const app = express();
 app.use(express.json());
 
 app.use('/auction-api/auth',authRouter)
-app.use('/auction-api/market',authRouter)
+app.use('/auction-api/market',marketRouter)
 
 app.get('/*', (req, res)=>{
     res.send("Welcome To My Application")

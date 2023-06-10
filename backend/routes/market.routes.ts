@@ -1,7 +1,6 @@
-import express from 'express';
+import express from 'express'
 
 import {createMarket, deleteMarket, updateMarket, getAllMarkets, getAuctioneerMarket } from '../controllers/market'
-
 
 export const marketRouter = express.Router();
 
@@ -14,4 +13,5 @@ marketRouter.route('/:id')
     .delete(deleteMarket)
     .put(updateMarket)
     .get(getAuctioneerMarket)
+
 
