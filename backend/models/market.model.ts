@@ -4,15 +4,13 @@ import {AuctioneerType} from './auctionner.model'
 
 export interface MarketType{
     auction : [AuctionType],
-    id: string,
     owner: AuctioneerType
 }
 
 
 const marketSchema = new Schema<MarketType>({
-    id: {type: String, required: true},
     auction: [{type: Schema.Types.ObjectId, ref:'Auction'}],
-    owner: {type: Schema.Types.ObjectId, ref:'Auctioneer'},
+    owner: {type: Schema.Types.ObjectId, ref:'Auctioneer', required: true},
 },
 {
     timestamps: true
