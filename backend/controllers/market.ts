@@ -7,6 +7,7 @@ const Market = new MarketServie();
 export const createMarket = async (req: Request, res: Response) =>{
     try{
         const market = await Market.createMarket(req.body);
+        
         return res.status(201).json(market)
     }  catch(e : any){
         return res.status(e.code? e.code : 500).json({success: false, message: e.message})
