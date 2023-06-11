@@ -82,9 +82,9 @@ export class MarketServie{
     }
 
     getAuctioneerMarket (id: string ){
-        return new Promise<{market: MarketType| null}>(async(resolve, reject) =>{
+        return new Promise<{market: MarketType[]| null}>(async(resolve, reject) =>{
             try{
-                const market: MarketType | null = await Market.findById(id);
+                const market: MarketType[] | null = await Market.find({owner: id});
 
                 return resolve({market})
             }
