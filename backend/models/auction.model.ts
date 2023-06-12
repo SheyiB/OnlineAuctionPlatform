@@ -13,7 +13,7 @@ export interface AuctionType{
     status: string
     leadingBid: [bid: number, bidder: string],
     bidders: [Bidders],
-    owner: Types.ObjectId
+    market: Types.ObjectId
 }
 
 const auctionSchema = new Schema<AuctionType>({
@@ -27,7 +27,7 @@ const auctionSchema = new Schema<AuctionType>({
     date: {type: Date, required: true},
     leadingBid: [ ],
     bidders: [{type: Schema.Types.ObjectId, ref: 'Bidders' }],
-    owner: {type: Schema.Types.ObjectId, ref: 'Auctioneer' , required: true}
+    market: {type: Schema.Types.ObjectId, ref: 'Auctioneers'}
 },
 {
     timestamps: true
