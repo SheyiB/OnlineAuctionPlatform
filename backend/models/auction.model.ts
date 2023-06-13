@@ -27,7 +27,7 @@ const auctionSchema = new Schema<AuctionType>({
     date: {type: Date, required: true},
     leadingBid: [ ],
     bidders: [{type: Schema.Types.ObjectId, ref: 'Bidders' }],
-    market: {type: Schema.Types.ObjectId, ref: 'Auctioneers'}
+    market: {type: Schema.Types.ObjectId, ref: 'Market'}
 },
 {
     timestamps: true
