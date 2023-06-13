@@ -41,10 +41,10 @@ export class AuctionServie{
         })
     }
 
-    getAuctioneersAuctions (id: string){
+    getMarketAuctions (id: string){
         return new Promise<{auction: AuctionType[]| null}>(async(resolve, reject) =>{
             try{
-                const auction: AuctionType[] | null = await Auction.find({owner: id});
+                const auction: AuctionType[] | null = await Auction.find({market: id});
 
                 return resolve({auction})
             }
