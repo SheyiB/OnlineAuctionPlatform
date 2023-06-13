@@ -24,9 +24,9 @@ export const getAuction = async (req: Request, res: Response) =>{
 
 }
 
-export const getAuctioneerAuction = async (req: Request, res: Response) =>{
+export const getMarketAuctions = async (req: Request, res: Response) =>{
     try{
-        const auction = await Auction.getAuctioneersAuctions(req.params.id);
+        const auction = await Auction.getMarketAuctions(req.params.id);
         return res.status(201).json(auction)
     }  catch(e : any){
         return res.status(e.code? e.code : 500).json({success: false, message: e.message})
