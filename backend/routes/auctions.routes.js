@@ -1,6 +1,6 @@
 import express from 'express'
 
-import { createAuction, deleteAuction, getAuction } from '../controllers/auction'
+import { createAuction, deleteAuction, getAuction, getMarketAuctions } from '../controllers/auction'
 
 export const auctionRouter = express.Router();
 
@@ -10,8 +10,8 @@ auctionRouter.route('/')
 ;
 
 auctionRouter.route('/:id')
-    .delete(deleteMarket)
+    .delete(deleteAuction)
     .put(updateMarket)
-    .get(getAuctioneerMarket)
+    .get(getMarketAuctions)
 
 
