@@ -24,7 +24,7 @@ export class BidService{
     updateBid(bidDetails: BidModel, bidId: string){
         return new Promise<{bid: BidModel| null}>(async(resolve, reject) => {
             try{
-                let bid = await Bid.findById(bidDetails)
+                let bid = await Bid.findById(bidId)
 
                 if (!bid){
                     reject({code: 404, message: 'BID NOT FOUND'})
@@ -40,6 +40,31 @@ export class BidService{
                 }
                 
                 e.source = 'Update Bid Service';
+                return reject(e)
+            }
+
+        })
+    }
+
+    deleteBid(bidId: string){
+        return new Promise<{}>(async(resolve, reject) => {
+            try{
+                let bid = await Bid.findById(bidId)
+
+                if (!bid){
+                    reject({code: 404, message: 'BID NOT FOUND'})
+                }
+
+                bid = await Bid.findByIdAndDelete(bidId)
+
+                resolve({bid})
+            }
+            catch(e: any){
+                if(e.message.includes('validation failed')){
+                    return reject({code: 400, message: e.message})
+                }
+                
+                e.source = 'Delete Bid Service';
                 return reject(e)
             }
 
