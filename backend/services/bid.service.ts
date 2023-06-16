@@ -70,4 +70,18 @@ export class BidService{
 
         })
     }
+
+    getAuctionBids(auctionId: string){
+        return new Promise<{}>(async (resolve, reject) =>{
+            try{
+                const bids = await Bid.find({auctionId})
+
+                resolve(bids)
+
+            }
+            catch(e:any){
+                return reject(e)
+            }
+        })
+    }
 }
