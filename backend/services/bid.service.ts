@@ -84,4 +84,19 @@ export class BidService{
             }
         })
     }
+
+
+    getBid(bidId: string){
+        return new Promise<{bid: BidModel | null}>(async (resolve, reject) =>{
+            try{
+                const bid: BidModel | null = await Bid.findById(bidId)
+
+                resolve({bid})
+
+            }
+            catch(e:any){
+                return reject(e)
+            }
+        })
+    }
 }
