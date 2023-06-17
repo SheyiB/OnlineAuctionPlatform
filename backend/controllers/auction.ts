@@ -44,5 +44,15 @@ export const deleteAuction = async (req: Request, res: Response) =>{
 
 }
 
+export const updateAuction = async (req: Request, res: Response) =>{
+    try{
+        const auction = await Auction.updateAuction(req.params.id, req.body);
+        return res.status(200).json(auction)
+    }  catch(e : any){
+        return res.status(e.code? e.code : 500).json({success: false, message: e.message})
+    }
+
+}
+
 
 
