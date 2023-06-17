@@ -6,6 +6,7 @@ import {db} from './db';
 //import routes
 import {authRouter} from './routes/auth.routes'
 import {marketRouter} from './routes/market.routes'
+import {auctionRouter} from './routes/auctions.routes'
 
 //setup config
 dotenv.config();
@@ -27,6 +28,7 @@ app.use(express.json());
 
 app.use('/auction-api/auth',authRouter)
 app.use('/auction-api/market',marketRouter)
+app.use('/auction-api/auction', auctionRouter)
 
 app.get('/*', (req, res)=>{
     res.send("Welcome To My Application")
