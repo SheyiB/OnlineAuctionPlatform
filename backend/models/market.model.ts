@@ -3,7 +3,7 @@ import {Schema, model} from 'mongoose';
 import {AuctioneerType} from './auctionner.model'
 
 export interface MarketType{
-    auction : [AuctionType],
+    auction : AuctionType[],
     owner: AuctioneerType
 }
 
