@@ -16,11 +16,11 @@ export class AuctionServie{
 
                 let auctionMarket = await Market.findById(market)
 
-                let marketAuctionList = auctionMarket?.auction
+                let marketAuctionList:AuctionType[] = []
+                auctionMarket?.auction.map(e => marketAuctionList.push(e))
+                marketAuctionList.push(auction)
 
-                console.log(marketAuctionList,  market, auctionId)
-
-              //  await Market.findByIdAndUpdate(market, {auction: marketAuctionList.auctionId} )
+                await Market.findByIdAndUpdate(market, {auction: marketAuctionList} )
 
                 return resolve({auction})
             }
