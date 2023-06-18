@@ -1,12 +1,26 @@
 import {Auction, AuctionType} from '../models/auction.model'
+import {Market} from '../models/market.model'
 
 
 export class AuctionServie{
 
     createAuction (body: AuctionType ){
         return new Promise<{auction: AuctionType}>(async(resolve, reject) =>{
-            try{
+            try{    
                 const auction: AuctionType = await Auction.create(body);
+
+                const auctionId = auction.id
+                
+                const market = auction.market.toString()
+                console.log(market)
+
+                let auctionMarket = await Market.findById(market)
+
+                let marketAuctionList = auctionMarket?.auction
+
+                console.log(marketAuctionList,  market, auctionId)
+
+              //  await Market.findByIdAndUpdate(market, {auction: marketAuctionList.auctionId} )
 
                 return resolve({auction})
             }
