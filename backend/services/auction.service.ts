@@ -20,7 +20,7 @@ export class AuctionServie{
                 auctionMarket?.auction.map(e => marketAuctionList.push(e))
                 marketAuctionList.push(auction)
 
-                await Market.findByIdAndUpdate(market, {auction: marketAuctionList} )
+                await Market.findByIdAndUpdate(market, {auction: marketAuctionList}, {new: true, runValidators: true} )
 
                 return resolve({auction})
             }
