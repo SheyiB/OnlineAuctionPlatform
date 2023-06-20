@@ -42,6 +42,15 @@ export const getAuctioneerMarket = async (req: Request, res: Response) =>{
     }
 }
 
+export const getMarket = async (req: Request, res: Response) =>{
+    try{
+        const market = await Market.getMarket(req.params.id);
+        return res.status(201).json(market)
+    }  catch(e : any){
+        return res.status(e.code? e.code : 500).json({success: false, message: e.message})
+    }
+}
+
 
 export const deleteMarket = async (req: Request, res: Response) =>{
     try{
