@@ -103,7 +103,10 @@ export class MarketServie{
    getMarket (id: string ){
         return new Promise<{market: MarketType| null}>(async(resolve, reject) =>{
             try{
-                const market: MarketType | null = await Market.findById(id);
+                const market: MarketType | null = await Market.findById(id).populate({
+                    path: 'auction',
+                    select: 'image item auctionType categroy date winner startingPrice status leadingBid bidders'
+                });
 
                 return resolve({market})
             }
