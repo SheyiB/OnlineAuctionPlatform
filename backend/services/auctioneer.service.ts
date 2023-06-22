@@ -7,7 +7,7 @@ import {Market, MarketType} from '../models/market.model'
 
 const Auction = new AuctionServie()
 
-export class AuctioneerServie{
+export class AuctioneerService{
 
     createAuction (body: AuctionType ){
         return new Promise<{auction: AuctionType}>(async(resolve, reject) =>{
@@ -28,6 +28,17 @@ export class AuctioneerServie{
         })
     }
 
+    createMarket(){}
+
+    getAuction() {}
+
+    updateAuction() {}
+
+    deleteAuction() {}
+
+    deleteMarket() {}
+
+    updateMarket() {}
 
     getAuctioneerMarket (id: string ){
         return new Promise<{market: MarketType[]| null}>(async(resolve, reject) =>{
