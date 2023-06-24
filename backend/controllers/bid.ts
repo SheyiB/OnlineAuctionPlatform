@@ -37,10 +37,21 @@ export const updateBid = async (req: Request, res: Response) =>{
 export const deleteBid = async (req: Request, res: Response) =>{
     try{
         const bid = await Bid.deleteBid(req.params.id);
-        return res.status(201).json(bid)
+        return res.status(200).json(bid)
     }  catch(e : any){
         return res.status(e.code? e.code : 500).json({success: false, message: e.message})
     }
 
 }
+
+export const getAuctionBids = async (req: Request, res: Response) =>{
+    try{
+        const bid = await Bid.getAuctionBids(req.params.auction);
+        return res.status(200).json(bid)
+    }  catch(e : any){
+        return res.status(e.code? e.code : 500).json({success: false, message: e.message})
+    }
+
+}
+
 
