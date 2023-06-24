@@ -24,3 +24,13 @@ export const getBid = async (req: Request, res: Response) =>{
 
 }
 
+export const updateBid = async (req: Request, res: Response) =>{
+    try{
+        const bid = await Bid.updateBid(req.body, req.params.id);
+        return res.status(201).json(bid)
+    }  catch(e : any){
+        return res.status(e.code? e.code : 500).json({success: false, message: e.message})
+    }
+
+}
+
