@@ -30,7 +30,7 @@ app.use(express.json());
 app.use('/auction-api/auth',authRouter)
 app.use('/auction-api/market',marketRouter)
 app.use('/auction-api/auction', auctionRouter)
-app.use('/auction-api/bids', auctionRouter)
+app.use('/auction-api/bids', bidRouter)
 
 app.get('/*', (req, res)=>{
     res.send("Welcome To My Application")
