@@ -32,7 +32,7 @@ export const getBid = async (req: Request, res: Response) =>{
 
 export const updateBid = async (req: Request, res: Response) =>{
     try{
-        const {error} = validateBidCreation(req.body)
+        const {error} = validateBidUpdate(req.body)
         if(error){
             return res.status(400).json({success: false, message: error.details[0].message})
         }
