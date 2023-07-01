@@ -12,3 +12,14 @@ export const validateBidCreation = ( bidDetails : BidModel) => {
 
     return makeBidSchema.validate(bidDetails)
 }
+
+export const validateBidUpdate = ( bidDetails : BidModel) => {
+    const makeBidSchema = Joi.object().keys({
+        bidId: Joi.string().required(),
+        bidValue: Joi.string().required(),
+        bidTime: Joi.date().required()
+    })
+
+    return makeBidSchema.validate(bidDetails)
+}
+
