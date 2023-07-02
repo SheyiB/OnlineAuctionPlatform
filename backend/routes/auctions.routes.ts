@@ -4,14 +4,22 @@ import { createAuction, deleteAuction, getAuction, getMarketAuctions, updateAuct
 
 export const auctionRouter = express.Router();
 
+import {marketRouter} from './market.routes'
+
 auctionRouter.route('/')
     .post(createAuction)
-    .get(getAuction)
 ;
 
 auctionRouter.route('/:id')
     .delete(deleteAuction)
     .put(updateAuction)
+    .get(getAuction)
+
+
+auctionRouter.route('market/:id')
     .get(getMarketAuctions)
+
+auctionRouter.use('/:id/market', marketRouter)
+
 
 
