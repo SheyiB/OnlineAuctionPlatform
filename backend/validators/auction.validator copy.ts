@@ -1,16 +1,7 @@
 import Joi from 'joi'
 import {AuctioneerType, AuctioneerLogin} from '../models/auctionner.model'
 
-export const validateLogin = ( loginDetails : AuctioneerLogin) => {
-    const loginSchema = Joi.object().keys({
-        email :  Joi.string().required(),
-        password: Joi.string().required()
-    })
-
-    return loginSchema.validate(loginDetails)
-}
-
-export const validateSignup = ( signupDetails : AuctioneerType) => {
+export const validateAuction = ( signupDetails : AuctioneerType) => {
     
     const signupSchema = Joi.object().keys({
         firstname: Joi.string().required(),
