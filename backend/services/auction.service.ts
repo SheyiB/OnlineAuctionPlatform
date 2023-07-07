@@ -1,6 +1,9 @@
 import {Auction, AuctionType} from '../models/auction.model'
 import {Market} from '../models/market.model'
 
+import {EventEmitter} from 'events'
+export const eventEmmitter = new EventEmitter(); 
+
 
 export class AuctionServie{
 
@@ -9,18 +12,7 @@ export class AuctionServie{
             try{    
                 const auction: AuctionType = await Auction.create(body);
 
-                const auctionId = auction.id
-                
-                const market = auction.market.toString()
-                console.log(market)
-
-                let auctionMarket = await Market.findById(market)
-
-                let marketAuctionList:AuctionType[] = []
-                auctionMarket?.auction.map(e => marketAuctionList.push(e))
-                marketAuctionList.push(auction)
-
-                await Market.findByIdAndUpdate(market, {auction: marketAuctionList}, {new: true, runValidators: true} )
+                eventEmmitter.emit('auctionCreated', auction);
 
                 return resolve({auction})
             }
