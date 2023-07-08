@@ -4,9 +4,34 @@ import {Market} from '../models/market.model'
 
 import {AuctionType} from '../models/auction.model'
 
-eventEmmitter.on('auctionCreated', async (auction) => {
-    try{
+import {EventEmitter} from 'events'
+
+
+export class AuctionEventsHandlers{
+
+    private eventEmitter: EventEmitter;
+
+    constructor(eventEmitter: EventEmitter){
+        this.eventEmitter = eventEmitter;
+    }
+
+    registerEventHandlers() {
         console.log('Event FiredUp')
+        this.eventEmitter.on('auctionCreated', async (auction) => {
+            try{
+
+                await this.updateMarket(auction);
+            }
+
+            catch(error){
+
+                console.log('An error occured')
+            }
+        });
+    }
+
+    private async updateMarket( auction: AuctionType){
+
         const market = auction.market.toString()
         let auctionMarket = await Market.findById(market)
 
@@ -17,7 +42,4 @@ eventEmmitter.on('auctionCreated', async (auction) => {
         await Market.findByIdAndUpdate(market, {auction: marketAuctionList}, {new: true, runValidators: true} )
 
     }
-        catch(e:any){
-
-    }
-})
+}
