@@ -1,8 +1,17 @@
 import {AuctionServie} from '../services/auction.service';
 
+import { EventEmitter} from 'events';
+
+import {AuctionEventsHandlers} from '../events/auction.events'
+
 import {Request, Response} from "express";
 
-const Auction = new AuctionServie();
+const eventEmitter = new EventEmitter();
+
+const auctionEventHandler = new AuctionEventsHandlers(eventEmitter)
+const Auction = new AuctionServie(eventEmitter);
+
+auctionEventHandler.registerEventHandlers();
 
 export const createAuction = async (req: Request, res: Response) =>{
     try{

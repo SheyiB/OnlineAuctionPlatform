@@ -19,7 +19,7 @@ export class AuctionEventsHandlers{
         console.log('Event FiredUp')
         this.eventEmitter.on('auctionCreated', async (auction) => {
             try{
-
+                console.log('An Auction Has been created!')
                 await this.updateMarket(auction);
             }
 

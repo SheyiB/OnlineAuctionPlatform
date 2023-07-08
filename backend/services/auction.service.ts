@@ -1,9 +1,8 @@
 import {Auction, AuctionType} from '../models/auction.model'
-import {Market} from '../models/market.model'
 
 import {EventEmitter} from 'events'
-export const eventEmmitter = new EventEmitter(); 
 
+export const eventEmmitter = new EventEmitter(); 
 
 export class AuctionServie{
 
