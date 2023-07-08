@@ -6,7 +6,7 @@ import {AuctionType} from '../models/auction.model'
 
 eventEmmitter.on('auctionCreated', async (auction) => {
     try{
-
+        console.log('Event FiredUp')
         const market = auction.market.toString()
         let auctionMarket = await Market.findById(market)
 

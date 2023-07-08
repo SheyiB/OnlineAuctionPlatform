@@ -7,12 +7,18 @@ export const eventEmmitter = new EventEmitter();
 
 export class AuctionServie{
 
+    private eventEmitter: EventEmitter;
+
+    constructor(eventEmitter: EventEmitter){
+        this.eventEmitter = eventEmitter
+    }
+
     createAuction (body: AuctionType ){
         return new Promise<{auction: AuctionType}>(async(resolve, reject) =>{
             try{    
                 const auction: AuctionType = await Auction.create(body);
 
-                eventEmmitter.emit('auctionCreated', auction);
+                this.eventEmitter.emit('auctionCreated', auction);
 
                 return resolve({auction})
             }
