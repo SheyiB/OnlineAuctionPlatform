@@ -49,16 +49,16 @@ export class AuctionEventsHandlers{
     }
 
     private async updateMarketForAuctionDeletion(auction: AuctionType){
-        // const market = auction.market.toString()
-        // let auctionMarket = await Market.findById(market)
+        const market = auction.market.toString()
+        let auctionMarket = await Market.findById(market)
 
-        // const position: number | undefined= auctionMarket?.auction.findIndex(e => e == auction)
-        // if(position!= -1){
-        //     auctionMarket?.auction.splice(position!,1)
-        // }
+        const position: number | undefined= auctionMarket?.auction.findIndex(e => e == auction)
+        if(position!= -1){
+            auctionMarket?.auction.splice(position!,1)
+        }
 
 
-        // await Market.findByIdAndUpdate(market, {auction: auctionMarket?.auction}, {new: true, runValidators: true} )
+        await Market.findByIdAndUpdate(market, {auction: auctionMarket?.auction}, {new: true, runValidators: true} )
  
         console.log('Auction Deleted')
     }
