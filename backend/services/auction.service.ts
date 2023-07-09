@@ -74,9 +74,17 @@ export class AuctionServie{
     deleteAuction (id: string ){
         return new Promise<{auction: null}>(async(resolve, reject) =>{
             try{
-                const auction: null = await Auction.findByIdAndDelete(id);
+                const auction = await Auction.findById(id)
 
-                return resolve({auction})
+                if(auction == null){
+                    return reject({message: 'Auction does not exist', code: 404})
+                }
+
+                await Auction.findByIdAndDelete(id);
+
+                this.eventEmitter.emit('auctionDeleted', auction);
+
+                return resolve({auction: null})
             }
             catch(e: any){
                 if(e.message.includes('validation failed')){
