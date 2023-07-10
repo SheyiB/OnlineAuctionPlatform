@@ -1,4 +1,5 @@
 import {Bidders} from './bidder.model';
+import {BidModel} from './bid.model'
 import {Schema, model, Types} from 'mongoose';
 
 export interface AuctionType{
@@ -12,7 +13,7 @@ export interface AuctionType{
     startingPrice: number,
     status: string
     leadingBid: [bid: number, bidder: string],
-    bidders: [Bidders],
+    bids: Types.ObjectId[] ,
     market: Types.ObjectId
 }
 
@@ -26,7 +27,7 @@ const auctionSchema = new Schema<AuctionType>({
     status: {type: String, enum: ['pending', 'ongoing', 'completed'] ,default: 'pending'},
     date: {type: Date, required: true},
     leadingBid: [ ],
-    bidders: [{type: Schema.Types.ObjectId, ref: 'Bidders' }],
+    bids: [{type: Schema.Types.ObjectId, ref: 'Bid' }],
     market: {type: Schema.Types.ObjectId, ref: 'Market'}
 },
 {
