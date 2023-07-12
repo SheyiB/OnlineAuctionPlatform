@@ -1,6 +1,5 @@
 const Login  = () => {
     return (
-    <>
     <div>
     <h1>YourAuction</h1>
     <h2>Login</h2>
@@ -14,7 +13,7 @@ const Login  = () => {
     </form>
     </div>
     
-    </>
+
     );
    };
    
