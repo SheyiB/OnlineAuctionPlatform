@@ -1,4 +1,11 @@
+import NewBidder from "./newBidder"
+import { useState } from "react"
+
 const AuctionComponent = ({auctionItem, auctionType, itemImage, auctionDate, auctionDuration, startingBid, status}) => {
+    const [bid, setBid] = useState(false)
+    const toggleBid =() => {
+        setBid(!bid)
+    }
     return (
         <div>
             <img src={itemImage} />
@@ -21,7 +28,9 @@ const AuctionComponent = ({auctionItem, auctionType, itemImage, auctionDate, auc
                 Status : {status}
             </span>
 
-            <button>Bid</button>
+            
+            <button onClick={toggleBid}> {bid ? "Cancel" :  "Bid" } </button>
+            <span>{bid? <NewBidder/> : ""} </span>
             
 
         </div>
