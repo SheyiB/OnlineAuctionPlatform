@@ -7,10 +7,11 @@ const Signup  = () => {
     const [phone, setPhone] = useState(0)
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
+    const [date, setDate] = useState('')
     const [isLoading, setIsLoading] = useState(false)
  
-  const createUser = async(firstname, lastname, email, phone, password) => {
-    const newUser = {firstname, lastname, email, phone, password}
+  const createUser = async(firstname, lastname, email, phone, dob, password) => {
+    const newUser = {firstname, lastname, email, phone, dob, password}
     let result;
     await fetch(`http://localhost:8080/auction-api/auth/signup`,{
             method: 'POST',
@@ -26,7 +27,7 @@ const Signup  = () => {
         if(password == confirmPassword){
             e.preventDefault()
             setIsLoading(true)
-            const user = await createUser(firstname, lastname, email, phone, password)
+            const user = await createUser(firstname, lastname, email, phone, '12-05-2023' ,password)
             if(user.status == 201){
              // NotificationManager.success("Login Successful", "", 1000);
               //Router.push('/');
@@ -68,6 +69,10 @@ const Signup  = () => {
             
             <label>Phone</label>
             <input type="number" onChange={(e) => setPhone(Number(e.target.value))}/><br/>
+
+            <label>Date Of Birth</label>
+            <input placeholder="Date of Birth" type="date" onFocus={(e) => e.target.type='date'}   required onChange={(e) => setDate(e.target.value)} />
+            
 
             <label>Password</label>
             <input type="password" onChange={(e) => setPassword(e.target.value)}/><br/>

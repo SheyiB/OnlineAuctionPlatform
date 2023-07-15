@@ -2,6 +2,7 @@
 import express from 'express';
 import * as dotenv from "dotenv";
 import {db} from './db';
+import cors from 'cors'
 
 //import routes
 import {authRouter} from './routes/auth.routes'
@@ -23,7 +24,10 @@ if (!process.env.PORT){
 
 const PORT: number = parseInt(process.env.PORT as string, 10);
 
+
 const app = express();
+
+app.use(cors({credentials: true}));
 
 app.use(express.json());
 
