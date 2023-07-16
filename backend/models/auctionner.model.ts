@@ -1,4 +1,4 @@
-import {Schema, model} from 'mongoose';
+import {Schema, model, Types} from 'mongoose';
 import {MarketType} from './market.model';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
@@ -9,7 +9,8 @@ export interface AuctioneerType{
     email: string;
     phone: number;
     password: string;
-    market: MarketType;
+    market: Types.ObjectId[];
+
 }
 
 
@@ -28,10 +29,11 @@ export interface AuctioneerLogin {
 const AuctioneerSchema = new Schema<AuctioneerType>({
     firstname: {type: String, required: true},
     lastname: {type: String, required: true},
-    email: {type: String, required: true},
+    email: {type: String, required: true, unique: true},
     phone: {type: Number, required: true},
     password: {type: String, required: true},
-    market: {type: Schema.Types.ObjectId, ref: 'Market' }
+    market: [{type: Schema.Types.ObjectId, ref: 'Market' }],
+
 },
 {
     timestamps: true
