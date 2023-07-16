@@ -1,12 +1,9 @@
 import { useState } from "react";
 import { Link , useNavigate } from 'react-router-dom';
-import dotenv from 'dotenv';
-import jwt from 'jsonwebtoken'
+import {verify} from 'jsonwebtoken-esm'
 
-dotenv.config();
-
-const apiUrl = process.env.REACT_APP_API_URL;
-const apiKey = process.env.REACT_APP_API_KEY;
+const apiUrl = import.meta.env.VITE_APP_API_URL;
+const apiKey = import.meta.env.VITE_APP_API_KEY;
 
 
 const Login  = () => {
@@ -28,11 +25,14 @@ const Login  = () => {
         .then(d => d.json())
         
         .catch((e)=>{console.log(e)})
-         
-        const decoded = jwt.verify(response.token, apiKey.toString('utf-8'))
+
+        const decoded = verify(response.token, apiKey);
+
+
         let auctioneerdata = await fetch(`${apiUrl}/market/${decoded.id}`).then(d=> d.json())
-        auctioneerdatadata.password = ''
+        auctioneerdata.password = ''
         localStorage.setItem("auctioneer", auctioneerdata)
+        console.log('Auctioneer Logged In')
         navigate('/dashboard')
       } catch (error) {
         
