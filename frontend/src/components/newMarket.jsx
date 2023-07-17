@@ -9,7 +9,6 @@ const NewMarket = ({id}) => {
     const [details, setDetails] = useState()
     
     const createMarket = async(e) => {
-        e.preventDefault()
 
         let market = {name, image, details, owner: id}
         await fetch(`${apiUrl}/market/`,{
@@ -19,6 +18,8 @@ const NewMarket = ({id}) => {
             },
             body: JSON.stringify(market),
         })
+
+        
 
     }
 
@@ -34,7 +35,7 @@ const NewMarket = ({id}) => {
                 <label> Details </label>
                 <input type="text" onChange={(e) => setDetails(e.target.value)}/><br/>
 
-                <button type="submit"> Create </button>
+                <button type="submit" > Create </button>
             </form>
         </div>
     )
