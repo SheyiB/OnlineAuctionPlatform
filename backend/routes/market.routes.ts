@@ -14,4 +14,7 @@ marketRouter.route('/:id')
     .put(updateMarket)
     .get(getMarket)
 
+marketRouter.route('/auctioneer/:id')
+    .get(getAuctioneerMarket)
+
 

@@ -17,15 +17,17 @@ const AuctioneerDashboard  = () => {
     console.log(_id)
     useEffect( () => {
         async function getAuctioneerMarket(){
-            let market = await fetch(`${apiUrl}/market/${_id}`).then(d=> d.json())
+            let market = await fetch(`${apiUrl}/market/auctioneer/${_id}`).then(d=> d.json())
             setAuctioneerMarket(market)
         }
 
         getAuctioneerMarket();
     }, [])
     
-    console.log(auctioneermarket)
-
+    if(auctioneermarket){
+        auctioneermarket.market.map( i => console.log(i))
+    }
+    
     const markets = [ 
         { name: "Shoe Auction",
          id: "asjsj822h291opasj9", 
@@ -41,7 +43,7 @@ const AuctioneerDashboard  = () => {
         <>
             <div>
             <h1> Markets </h1>
-            {markets.map(market => <MarketComponent details={market.details} id={market.id} image={market.image} name={market.name} key={market.id} />)}
+            { auctioneermarket!='' ? markets.map(market => <MarketComponent details={market.details} id={market.id} image={market.image} name={market.name} key={market.id} />) : "No Market"}
             </div>
 
             <button onClick={toggleCreateMarket}>{create? "Cancel" : "Create Market"}  </button> 
