@@ -29,9 +29,7 @@ const Login  = () => {
         const decoded = verify(response.token, apiKey);
 
 
-        let auctioneerdata = await fetch(`${apiUrl}/market/${decoded.id}`).then(d=> d.json())
-        auctioneerdata.password = ''
-        localStorage.setItem("auctioneer", auctioneerdata)
+        localStorage.setItem("auctioneer", response.auctioneer)
         console.log('Auctioneer Logged In')
         navigate('/dashboard')
       } catch (error) {
