@@ -1,17 +1,29 @@
 import MarketComponent from '../components/marketComponent'
 import NewMarket from '../components/newMarket';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
-const AuctioneerDashboard  = async() => {
-    const auctioneer = localStorage.getItem("auctioneerdata")
+const apiUrl = import.meta.env.VITE_APP_API_URL;
+
+
+const AuctioneerDashboard  = () => {
+
+    const [mode, setMode] = useState('basic')
+    const [create, setCreate] = useState(false) 
+    const [auctioneermarket, setAuctioneerMarket] = useState()
+    const auctioneer = JSON.parse(localStorage.getItem("auctioneerdata"))
+    
     const {market, _id, firstname, lastname, email, phone } = auctioneer
 
-    let auctioneermarket = await fetch(`${apiUrl}/market/${_id}`).then(d=> d.json())
+    useEffect( () => {
+        async function getAuctioneerMarket(){
+            let auctioneermarket = await fetch(`${apiUrl}/market/${_id}`).then(d=> d.json())
+            setAuctioneerMarket(auctioneermarket)
+        }
 
-    console.log(auctioneermarket)
+        getAuctioneerMarket();
+    }, [])
     
-    const [create, setCreate] = useState(false) 
-    const [mode, setMode] = useState('basic')
+    console.log(auctioneermarket)
 
     const markets = [ 
         { name: "Shoe Auction",
@@ -31,9 +43,9 @@ const AuctioneerDashboard  = async() => {
             {markets.map(market => <MarketComponent details={market.details} id={market.id} image={market.image} name={market.name} key={market.id} />)}
             </div>
 
-            <button onClick={toggleCreateMarket}>{create? "Cancel" : "Create Market"}  </button>
+            <button onClick={toggleCreateMarket}>{create? "Cancel" : "Create Market"}  </button> 
             <span> {create ? <NewMarket /> : "" } </span>
-          
+           
         </> : "" 
         }
 

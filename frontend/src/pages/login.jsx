@@ -29,7 +29,8 @@ const Login  = () => {
         const decoded = verify(response.token, apiKey);
 
 
-        localStorage.setItem("auctioneerdata", response.auctioneer)
+        localStorage.setItem("auctioneerdata", JSON.stringify(response.auctioneer))
+        console.log(response.auctioneer)
         console.log('Auctioneer Logged In')
         navigate('/dashboard')
       } catch (error) {
