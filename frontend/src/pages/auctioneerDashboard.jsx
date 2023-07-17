@@ -14,10 +14,11 @@ const AuctioneerDashboard  = () => {
     
     const {market, _id, firstname, lastname, email, phone } = auctioneer
 
+    console.log(_id)
     useEffect( () => {
         async function getAuctioneerMarket(){
-            let auctioneermarket = await fetch(`${apiUrl}/market/${_id}`).then(d=> d.json())
-            setAuctioneerMarket(auctioneermarket)
+            let market = await fetch(`${apiUrl}/market/${_id}`).then(d=> d.json())
+            setAuctioneerMarket(market)
         }
 
         getAuctioneerMarket();
@@ -44,7 +45,7 @@ const AuctioneerDashboard  = () => {
             </div>
 
             <button onClick={toggleCreateMarket}>{create? "Cancel" : "Create Market"}  </button> 
-            <span> {create ? <NewMarket /> : "" } </span>
+            <span> {create ? <NewMarket id={_id} /> : "" } </span>
            
         </> : "" 
         }
