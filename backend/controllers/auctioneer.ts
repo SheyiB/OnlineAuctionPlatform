@@ -6,7 +6,11 @@ import {AuctioneerService} from '../services/auctioneer.service';
 
 import {Request, Response} from "express";
 
-const Auction = new AuctionServie();
+import {EventEmitter} from 'events'
+
+const eventEmmitter = new EventEmitter(); 
+
+const Auction = new AuctionServie(eventEmmitter);
 
 const Market = new MarketServie();
 
@@ -53,7 +57,7 @@ export const deleteAuction = async (req: Request, res: Response) =>{
 
 export const getMarket = async (req: Request, res: Response) =>{
     try{
-        const auction = await Auctioneer.getAuctioneerMarket(req.params.id);
+        const auction = await Auctioneer.getAuctioneerMarket(req.body.owner);
         return res.status(201).json(auction)
     }  catch(e : any){
         return res.status(e.code? e.code : 500).json({success: false, message: e.message})

@@ -8,17 +8,17 @@ const NewMarket = ({id}) => {
     const [image, setImage] = useState()
     const [details, setDetails] = useState()
     
-    const createMarket = async() => {
-        const response = await fetch(`${apiUrl}/market`,{
+    const createMarket = async(e) => {
+        e.preventDefault()
+
+        let market = {name, image, details, owner: id}
+        await fetch(`${apiUrl}/market/`,{
             method: 'POST',
             headers: {
                 'Content-type' : 'application/json',
             },
-            body: JSON.stringify({name, image, details, owner: id}),
+            body: JSON.stringify(market),
         })
-        .then(d => d.json())
-        
-        .catch((e)=>{console.log(e)})
 
     }
 
