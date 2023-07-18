@@ -11,6 +11,7 @@ const AuctioneerDashboard  = () => {
     const [mode, setMode] = useState('basic')
     const [create, setCreate] = useState(false) 
     const [auctioneermarket, setAuctioneerMarket] = useState()
+  
     const auctioneer = JSON.parse(localStorage.getItem("auctioneerdata"))
     
     const {market, _id, firstname, lastname, email, phone } = auctioneer
@@ -34,7 +35,19 @@ const AuctioneerDashboard  = () => {
     }
     return (
             <div className="dashboard-container">
-             <h2>{firstname}'s Auction</h2>
+            <h2 >{firstname}'s Auction</h2>
+            <button className="create-market-button" onClick={toggleCreateMarket}>
+                {create ? "Cancel" : "Create Market"}
+            </button>
+            {create && (
+                <div className="popup-container visible">
+                <form className="popup-form" >
+                    <NewMarket id={_id} />
+                </form>
+                </div>
+            )}
+
+            
                 {mode === 'basic' && (
                     <>
                     <div className="markets-container">
@@ -45,7 +58,7 @@ const AuctioneerDashboard  = () => {
                             <MarketComponent
                                 key={market._id}
                                 details={market.details}
-                                id={market.id}
+                                id={market._id}
                                 image={market.image}
                                 name={market.name}
                             />
@@ -55,10 +68,7 @@ const AuctioneerDashboard  = () => {
                         )}
                         </div>
                     </div>
-                    <button className="create-market-button" onClick={toggleCreateMarket}>
-                        {create ? "Cancel" : "Create Market"}
-                    </button>
-                    <span>{create && <NewMarket id={_id} />}</span>
+                   
                     </>
                 )}
 
