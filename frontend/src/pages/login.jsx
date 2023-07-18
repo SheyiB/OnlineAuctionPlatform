@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link , useNavigate } from 'react-router-dom';
 import {verify} from 'jsonwebtoken-esm'
+import './login.css'; 
 
 const apiUrl = import.meta.env.VITE_APP_API_URL;
 const apiKey = import.meta.env.VITE_APP_API_KEY;
@@ -42,17 +43,16 @@ const Login  = () => {
 
     
     return (
-    <div>
-    <h1>YourAuction</h1>
-    <h2>Login</h2>
-    <form onSubmit={handleSubmit}>
+      <div className="login-container">
+      <h1>YourAuction</h1>
+      <h2>Login</h2>
+      <form onSubmit={handleSubmit}>
         <label>Email</label>
-        <input type="email" onChange={(e) => setEmail(e.target.value)} /><br/>
+        <input type="email" onChange={(e) => setEmail(e.target.value)} /><br />
         <label>Password</label>
-        <input type="password" onChange={(e) => setPassword(e.target.value)} /><br/>
-        <button type="submit"> Login</button>
-        
-    </form>
+        <input type="password" onChange={(e) => setPassword(e.target.value)} /><br />
+        <button type="submit">Login</button>
+      </form>
     </div>
     
 
