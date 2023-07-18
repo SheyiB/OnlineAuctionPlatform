@@ -1,5 +1,8 @@
 import { useState } from "react";
 
+
+import './signup.css'
+
 const Signup  = () => {
     const [firstname, setFirstname] = useState('')
     const [lastname, setLastname] = useState('')
@@ -52,38 +55,38 @@ const Signup  = () => {
       }
 
     return (
-        <div>
+      <div className="signup-container">
         <h1>YourAuction</h1>
+        
         <h2>SignUp</h2>
-
         
         <form onSubmit={onSubmit}>
-            <label>FirstName</label>
-            <input type="text" onChange={(e) => setFirstname(e.target.value)}  /><br/>
-            
-            <label>LastName</label>
-            <input type="text"  required onChange={(e) => setLastname(e.target.value)} /><br/>
-            
-            <label>Email</label>
-            <input type="email" required onChange={(e) => setEmail(e.target.value)} /><br/>
-            
-            <label>Phone</label>
-            <input type="number" onChange={(e) => setPhone(Number(e.target.value))}/><br/>
-
-            <label>Date Of Birth</label>
-            <input placeholder="Date of Birth" type="date" onFocus={(e) => e.target.type='date'}   required onChange={(e) => setDate(e.target.value)} />
-            
-
-            <label>Password</label>
-            <input type="password" onChange={(e) => setPassword(e.target.value)}/><br/>
-            
-            <label>Confirm Password</label>
-            <input type="password" onChange={(e) => onChangePassword(e)} /><br/>
-            
-            <button type="submit"> Login</button>
-            
+          
+          <label>FirstName</label>
+          <input type="text" className="input-field" onChange={(e) => setFirstname(e.target.value)} /><br/>
+          
+          <label>LastName</label>
+          <input type="text" className="input-field" required onChange={(e) => setLastname(e.target.value)} /><br/>
+          
+          <label>Email</label>
+          <input type="email" className="input-field" required onChange={(e) => setEmail(e.target.value)} /><br/>
+          
+          <label>Phone</label>
+          <input type="number" className="input-field" onChange={(e) => setPhone(Number(e.target.value))} /><br/>
+          
+          <label>Date Of Birth</label>
+          <input placeholder="Date of Birth" type="date" className="input-field" onFocus={(e) => e.target.type='date'} required onChange={(e) => setDate(e.target.value)} />
+          
+          <label>Password</label>
+          <input type="password" className="input-field" onChange={(e) => setPassword(e.target.value)} /><br/>
+          
+          <label>Confirm Password</label>
+          <input type="password" className="input-field" onChange={(e) => onChangePassword(e)} /><br/>
+          
+          <button type="submit" className="submit-button">Sign Up</button>
         </form>
-        </div>
+      </div>
+
         
     );
    };
