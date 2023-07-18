@@ -1,0 +1,45 @@
+/* CSS for MarketComponent */
+.market-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 25vw;
+    border: 2px solid blueviolet;
+  }
+  
+  .market-name {
+    width: 100%;
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .market-image {
+    width: 100%;
+    height: 300px; /* Adjust the height as needed */
+    object-fit: cover;
+    margin-bottom: 10px;
+  }
+  
+  .market-details {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  
+  .button-container {
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  
+  .market-button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+  }
+  
+  /* Add any additional styling as needed */
+  

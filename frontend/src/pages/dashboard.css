@@ -1,0 +1,39 @@
+/* CSS for Dashboard component */
+.dashboard-container {
+    text-align: center;
+  }
+  
+  .dashboard-container h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .markets-container {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding-left:5vw;
+  }
+  
+  .markets-container h1 {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+  
+  .market-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .create-market-button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    margin-bottom: 20px;
+  }
+  

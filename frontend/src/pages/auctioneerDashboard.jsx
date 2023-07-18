@@ -1,6 +1,7 @@
 import MarketComponent from '../components/marketComponent'
 import NewMarket from '../components/newMarket';
 import { useEffect, useState } from 'react';
+import './dashboard.css'
 
 const apiUrl = import.meta.env.VITE_APP_API_URL;
 
@@ -32,39 +33,47 @@ const AuctioneerDashboard  = () => {
          create ? setCreate(false) : setCreate(true)
     }
     return (
-    <div>
-        <h2> {firstname}'s Auction</h2>
-        { mode == 'basic' ?
-        <>
-            <div>
-            <h1> Markets </h1>
-            { auctioneermarket && auctioneermarket.market.length >1 ? auctioneermarket.market.map(market => <MarketComponent key={market._id} details={market.details} id={market.id} image={market.image} name={market.name}  />) : "No Market"}
-            </div>
+            <div className="dashboard-container">
+             <h2>{firstname}'s Auction</h2>
+                {mode === 'basic' && (
+                    <>
+                    <div className="markets-container">
+                        <h1>Markets</h1>
+                        <div className="market-row">
+                        {auctioneermarket && auctioneermarket.market.length > 1 ? (
+                            auctioneermarket.market.map(market => (
+                            <MarketComponent
+                                key={market._id}
+                                details={market.details}
+                                id={market.id}
+                                image={market.image}
+                                name={market.name}
+                            />
+                            ))
+                        ) : (
+                            <p>No Market</p>
+                        )}
+                        </div>
+                    </div>
+                    <button className="create-market-button" onClick={toggleCreateMarket}>
+                        {create ? "Cancel" : "Create Market"}
+                    </button>
+                    <span>{create && <NewMarket id={_id} />}</span>
+                    </>
+                )}
 
-            <button onClick={toggleCreateMarket}>{create? "Cancel" : "Create Market"}  </button> 
-            <span > {create ? <NewMarket id={_id} /> : "" } </span>
-           
-        </> : "" 
-        }
-
-        {
-            mode == 'view' ? 
-            <>
-
-                <div>
-                    <h1> View Auction </h1>
+            {mode === 'view' && (
+                <div className="view-auction-container">
+                <h1>View Auction</h1>
                 </div>
-            </>  : ""
-        }
+            )}
 
-        {
-            mode == 'edit' ? ""  : ""
-        }
-
-    </div>
-        
-    
-    
+            {mode === 'edit' && (
+                <div className="edit-container">
+                {/* Content for edit mode */}
+                </div>
+            )}
+            </div>
 
     );
    };
