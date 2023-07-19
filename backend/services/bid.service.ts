@@ -1,11 +1,23 @@
 import {BidModel, Bid} from '../models/bid.model'
 
+import {EventEmitter} from 'events'
+
+export const eventEmmitter = new EventEmitter(); 
+
 export class BidService{
+
+    private eventEmitter: EventEmitter;
+
+    constructor(eventEmitter: EventEmitter){
+        this.eventEmitter = eventEmitter
+    }
 
     makeBid(bidDetails: BidModel){
         return new Promise<{bid: BidModel}>(async(resolve, reject) => {
             try{
                 const bid = await Bid.create(bidDetails)
+
+                this.eventEmitter.emit('bidCreated', bid)
 
                 resolve({bid})
             }

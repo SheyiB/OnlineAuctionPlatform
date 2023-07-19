@@ -2,9 +2,19 @@ import {Request, Response} from 'express'
 
 import {BidService} from '../services/bid.service';
 
+import { EventEmitter} from 'events';
+
+import {BidEventsHandlers} from '../events/bid.events'
+
+const eventEmitter = new EventEmitter();
+
 import {validateBidCreation, validateBidUpdate} from '../validators/bid.validator'
 
-const Bid = new BidService();
+const bidEventsHandlers = new BidEventsHandlers(eventEmitter)
+
+const Bid = new BidService(eventEmitter);
+
+bidEventsHandlers.registerBidEventHandlers();
 
 export const makeBid = async (req: Request, res: Response) =>{
     try{
