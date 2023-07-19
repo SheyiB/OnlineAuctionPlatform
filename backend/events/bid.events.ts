@@ -26,15 +26,14 @@ export class BidEventsHandlers{
         });
     }
 
-    private async updateAuctionForBidCreation( bid){
+    private async updateAuctionForBidCreation( bid: BidModel){
 
         const auction = bid.auctionId.toString()
         let bidAuction = await Auction.findById(auction)
 
         let auctionBids:Types.ObjectId[] = []
         bidAuction?.bids.map(e => auctionBids.push(e))
-        console.log(bid.id)
-        auctionBids.push(bid._id)
+        auctionBids.push(bid.id)
 
         await Auction.findByIdAndUpdate(auction, {bids: auctionBids}, {new: true, runValidators: true} )
 

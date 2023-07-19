@@ -36,7 +36,10 @@ export class AuctionServie{
     getAuction (id: string ){
         return new Promise<{auction: AuctionType| null}>(async(resolve, reject) =>{
             try{
-                const auction: AuctionType | null = await Auction.findById(id);
+                const auction: AuctionType | null = await Auction.findById(id).populate({
+                    path : 'bids',
+                    select : 'bidOwner auctionId bidTime id bidValue'
+                });
 
                 return resolve({auction})
             }
