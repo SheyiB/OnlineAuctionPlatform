@@ -1,0 +1,48 @@
+/* CSS for Auctions Component */
+.auctions-container {
+    text-align: center;
+  }
+  
+  .auctions-container h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .auction-item {
+    margin-bottom: 20px;
+  }
+  
+  .auction-item h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+  
+  .auction-item img {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    margin-bottom: 10px;
+  }
+  
+  .auction-item p {
+    margin-bottom: 10px;
+  }
+  
+  .auction-item span {
+    font-weight: bold;
+  }
+  
+  .auction-item .status {
+    color: #007bff;
+  }
+  
+  .auction-item .status.closed {
+    color: #dc3545;
+  }
+
+  .auction-market{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 50px;
+    padding: 5vh 10vw;
+  }
