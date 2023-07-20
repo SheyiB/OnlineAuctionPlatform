@@ -1,0 +1,27 @@
+/* CSS for the Auction Form */
+.auction-form-container-min {
+    position: fixed;
+    bottom: -110px;
+    right: -150px;
+    background-color: #838080;
+    border: 2px solid blueviolet;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    width: 350px;
+    display: flex;
+    align-items: center;
+    max-height: 500px;
+  }
+  
+.auction-form-container-min form{
+    text-align: center;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    justify-content: center;
+ 
+}
+
+  
+  

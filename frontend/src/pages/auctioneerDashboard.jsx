@@ -8,15 +8,13 @@ const apiUrl = import.meta.env.VITE_APP_API_URL;
 
 const AuctioneerDashboard  = () => {
 
-    const [mode, setMode] = useState('basic')
     const [create, setCreate] = useState(false) 
     const [auctioneermarket, setAuctioneerMarket] = useState()
-  
+    
     const auctioneer = JSON.parse(localStorage.getItem("auctioneerdata"))
     
     const {market, _id, firstname, lastname, email, phone } = auctioneer
 
-    console.log(_id)
     useEffect( () => {
         async function getAuctioneerMarket(){
             let market = await fetch(`${apiUrl}/market/auctioneer/${_id}`).then(d=> d.json())
@@ -24,11 +22,7 @@ const AuctioneerDashboard  = () => {
         }
 
         getAuctioneerMarket();
-    }, [])
-    
-    if(auctioneermarket){
-        auctioneermarket.market.map( i => console.log(i))
-    }
+    },[])
     
     const toggleCreateMarket = () => {
          create ? setCreate(false) : setCreate(true)
@@ -39,7 +33,7 @@ const AuctioneerDashboard  = () => {
             <button className="create-market-button" onClick={toggleCreateMarket}>
                 {create ? "Cancel" : "Create Market"}
             </button>
-            {create && (
+            { create && (
                 <div className="popup-container visible">
                 <form className="popup-form" >
                     <NewMarket id={_id} />
@@ -47,8 +41,6 @@ const AuctioneerDashboard  = () => {
                 </div>
             )}
 
-            
-                {mode === 'basic' && (
                     <>
                     <div className="markets-container">
                         <h1>Markets</h1>
@@ -61,6 +53,7 @@ const AuctioneerDashboard  = () => {
                                 id={market._id}
                                 image={market.image}
                                 name={market.name}
+                        
                             />
                             ))
                         ) : (
@@ -70,19 +63,6 @@ const AuctioneerDashboard  = () => {
                     </div>
                    
                     </>
-                )}
-
-            {mode === 'view' && (
-                <div className="view-auction-container">
-                <h1>View Auction</h1>
-                </div>
-            )}
-
-            {mode === 'edit' && (
-                <div className="edit-container">
-                {/* Content for edit mode */}
-                </div>
-            )}
             </div>
 
     );

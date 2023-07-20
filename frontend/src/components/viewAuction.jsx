@@ -1,4 +1,4 @@
-const ViewMarketComponent = ({image, item, auctionType, startingPrice, auctionDetails, date}) => {
+const ViewAuctionComponent = ({image, item, auctionType, startingPrice, auctionDetails, date}) => {
     return(
         <>
         <div className="view-market-container">
@@ -28,4 +28,4 @@ const ViewMarketComponent = ({image, item, auctionType, startingPrice, auctionDe
     )
 }
 
-export default ViewMarketComponent;
+export default ViewAuctionComponent;

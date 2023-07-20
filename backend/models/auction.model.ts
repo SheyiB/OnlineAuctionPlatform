@@ -23,7 +23,7 @@ const auctionSchema = new Schema<AuctionType>({
     image: {type: String, required: true},
     item: {type: String, required: true},
     auctionType: {type: String, required: true},
-    categroy: {type: String, required: true},
+    categroy: {type: String},
     startingPrice: {type: Number, required: true},
     winner: {type: String, default: " "},
     status: {type: String, enum: ['pending', 'ongoing', 'completed'] ,default: 'pending'},

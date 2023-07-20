@@ -4,6 +4,7 @@ import AuctionerDashboard from './pages/auctioneerDashboard';
 import Login from './pages/login';
 import Market from './pages/market';
 import Signup from './pages/signup';
+import EditMarket from './pages/EditMarket'
 
 const App = () => {
  return (
@@ -14,6 +15,7 @@ const App = () => {
           <Route path="/market/:marketId" element={<Market />} />
           <Route path="/dashboard" element={<AuctionerDashboard />} />
           <Route path="/auction/:auctionId" element={<Auction />} />
+          <Route path="/dashboard/:marketId" element={<EditMarket/>} />
        </Routes>
     </>
  );
