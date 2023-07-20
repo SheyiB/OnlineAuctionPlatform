@@ -1,0 +1,76 @@
+/* CSS for ViewMarketComponent */
+.view-market-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 2rem;
+    padding: 2rem;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+  }
+  
+  .view-market-image {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    object-fit: cover;
+    border-radius: 10px;
+  }
+  
+  .view-market-details {
+    text-align: center;
+    margin-top: 1rem;
+  }
+  
+  .view-market-heading {
+    font-size: 1.5rem;
+    margin: 1rem 0;
+    font-weight: bold;
+  }
+  
+  .view-market-subheading {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .view-market-description {
+    font-size: 1rem;
+    margin: 1rem 0;
+  }
+  
+  .view-market-buttons {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  
+  .view-market-button {
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .view-market-button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Responsive Design */
+  @media screen and (max-width: 768px) {
+    .view-market-image {
+      max-width: 200px;
+    }
+  
+    .view-market-heading {
+      font-size: 1.3rem;
+    }
+  
+    .view-market-subheading,
+    .view-market-description {
+      font-size: 0.9rem;
+    }
+  }
+  
