@@ -27,3 +27,5 @@ const ViewMarketComponent = ({image, item, auctionType, startingPrice, auctionDe
 
     )
 }
+
+export default ViewMarketComponent;
