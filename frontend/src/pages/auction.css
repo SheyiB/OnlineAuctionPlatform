@@ -1,80 +1,95 @@
 /* CSS for Auction Page */
 .auction-page {
-    text-align: center;
-  }
-  
-  .auction-page-heading {
-    font-size: 36px;
-    margin-bottom: 20px;
-  }
-  
-  .auction-page-image {
-    width: 200px;
-    height: 200px;
-    object-fit: cover;
-    margin-bottom: 20px;
-  }
-  
-  .auction-page-subheading {
-    font-size: 24px;
-    margin-bottom: 10px;
-  }
-  
-  .auction-page-description {
-    font-size: 18px;
-    margin-bottom: 10px;
-  }
-  
-  .auction-page-list {
-    text-align: left;
-    margin-bottom: 20px;
-  }
-  
-  .auction-page-list-item {
-    margin-bottom: 5px;
-  }
-  
-  .auction-page-section {
-    display: block;
-    margin-bottom: 20px;
-  }
-  
-  .auction-page-highest-bid {
-    margin-top: 20px;
-  }
-  
-  .auction-page-bid-form {
-    margin-top: 20px;
-  }
-  
-  .auction-page-bid-label {
-    display: block;
-    margin-bottom: 5px;
-  }
-  
-  .auction-page-bid-input {
-    margin-bottom: 10px;
-    padding: 5px;
-  }
-  
-  .auction-page-bid-button {
-    padding: 8px 16px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-  }
-  
-  .auction-page-bid-button:hover {
-    background-color: #0056b3;
-  }
-  
-  .auction-page-ended-bid {
-    margin-top: 20px;
-    font-weight: bold;
-  }
-  
-  .auction-page-pending-bid {
-    margin-top: 20px;
-  }
-  
+  text-align: center;
+}
+
+.auction-page-heading {
+  font-size: 36px;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  color: blueviolet;
+}
+
+.auction-page-top{
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 50px;
+  box-sizing: border-box;
+}
+
+.auction-page-image {
+  width: 50%;
+  height: 300px;
+  object-fit: cover;
+  margin-bottom: 20px;
+}
+
+.auction-page-details {
+  text-transform: lowercase;
+}
+.auction-page-subheading {
+  font-size: 24px;
+  margin-bottom: 10px;
+  text-transform: capitalize;
+}
+
+.auction-description{
+  margin-right: 40px;
+}
+.auction-page-description {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.auction-page-list {
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+.auction-page-list-item {
+  margin-bottom: 5px;
+}
+
+.auction-page-section {
+  display: block;
+  margin-bottom: 20px;
+}
+
+.auction-page-highest-bid {
+  margin-top: 20px;
+}
+
+.auction-page-bid-form {
+  margin-top: 20px;
+}
+
+.auction-page-bid-label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.auction-page-bid-input {
+  margin-bottom: 10px;
+  padding: 5px;
+}
+
+.auction-page-bid-button {
+  padding: 8px 16px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+.auction-page-bid-button:hover {
+  background-color: #0056b3;
+}
+
+.auction-page-ended-bid {
+  margin-top: 20px;
+  font-weight: bold;
+}
+
+.auction-page-pending-bid {
+  margin-top: 20px;
+}

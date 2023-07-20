@@ -1,19 +1,37 @@
 import { useState, useEffect } from "react";
 import './auction.css'
 import {useParams} from 'react-router-dom';
+import demo from '../assets/demo.jpg'
 
 const apiUrl = import.meta.env.VITE_APP_API_URL;
 
 const Auction  = () => {
-    const [status, setStatus] = useState("live")
+    const [status, setStatus] = useState("pending")
     const {auctionId} = useParams();
     const [auction, setAuction] = useState("")
     const [bidOwner, setBidOwner] = useState("")
     const [bidValue, setBidValue] = useState("")
+    const [leadingBid, setLeadingBid] = useState(auction.startingPrice)
+    const [leadingBidder, setLeadingBidder] = useState('')
+    const [bids, setBids] = useState()
 
-    const submitBid = async( bidValue, bidOwner) => {
+    useEffect( () => {
+      async function getAuction(){
+          let auctionData = await fetch(`${apiUrl}/auction/${auctionId}`).then(d=> d.json())
+          setAuction(auctionData.auction)
+        //  setStatus(auctionData.auction.status)
+         setBids(auctionData.bids)
+      }
+
+      getAuction();
+  }, [])
+     
+  
+
+    const submitBid = async() => {
          const time = new Date()
          const bid = {bidOwner: bidOwner, bidValue: bidValue, auctionId: auctionId, bidTime: time}
+         console.log(bid)
          await fetch(`${apiUrl}/bids/`,{
             method: 'POST',
             headers: {
@@ -22,22 +40,37 @@ const Auction  = () => {
             body: JSON.stringify(bid),
         }).then(d => d.json()).catch((e)=>{console.log(e)})    
       }
+
    
-   const onBidSubmit = async(bidValue)=>{
+   const onBidSubmit = async(bidValue, bidOwner)=>{
       
+      if(auction.auctionType == 'english'){
+            if(bidValue > leadingBid ){
+               setLeadingBid(bidValue)
+               setLeadingBidder(bidOwner)
+               
+            }
+            else{
+               return 'Invalid Bid, Bid Must be greater than Leading Bid'
+            }
+      }
+      else if(auction.auctionType == 'dutch'){
+            if(bidValue < leadingBid ){
+               setLeadingBid(bidValue)
+               setLeadingBidder(bidOwner)
+            }
+            else{
+               return 'Invalid Bid, Bid Must be Less than Leading Bid'
+            }
+      }
+      else if(auction.auctionType == 'sealedBid'){
+         
+
    }
 
-    useEffect( () => {
-      async function getAuction(){
-          let auctionData = await fetch(`${apiUrl}/auction/${auctionId}`).then(d=> d.json())
-          setAuction(auctionData.auction)
-        //  setStatus(auctionData.auction.status)
-      }
+   }
 
-      getAuction();
-  }, [])
-     
-
+    
 
   if(auction){
    console.log(auction)
@@ -45,56 +78,68 @@ const Auction  = () => {
  return (
    <>
    <div className="auction-page">
-     <h1 className="auction-page-heading">Seyi Shoe Auction</h1>
- 
-     <img src="item.png" className="auction-page-image" alt="Item" />
-     <h1 className="auction-page-heading">Rare Ball ORB!</h1>
-     <h2 className="auction-page-subheading">This Ball was gotten from Mars in 1960</h2>
-     <h2 className="auction-page-subheading">Auction Type: {auction.auctionType}</h2>
- 
-     {status === "live" && (
-       <>
-         <div className="auction-page-section">
+     <div className="auction-details">
+       <h1 className="auction-page-heading-main">Seyi Shoe Auction</h1>
+       <div className="auction-page-top">
+       <img src={demo} className="auction-page-image" alt="Item" />
+       
+       <div className="auction-description">
+         <h1 className="auction-page-heading">{auction.item}</h1>
+         <h2 className="auction-page-details">{auction.details ? auction.details : `Auction for ${auction.item}` }</h2>
+         <h2 className="auction-page-subheading">Auction Type: {auction.auctionType}</h2>
+         <h2 className="auction-page-subheading">Auction Status: {auction.status}</h2>
+         <h2 className="auction-page-subheading">{auction.status == 'pending' ? `Auction Date : ${auction.date.slice(0,10)}` : ""}</h2>
+       </div>
+       </div>
+       
+       {status === "live" && (
+         <div className="auction-timer">
            <h1 className="auction-page-heading">Time Remaining</h1>
            <h2 className="auction-page-subheading">24:01</h2>
            <h2 className="auction-page-subheading">LIVE!</h2>
          </div>
-         <div className="auction-page-section">
-            { auction.auctionType !== 'sealed-bid' ? 
-            <>
-             <h1 className="auction-page-heading">Bids</h1>
-           <ul className="auction-page-list">
-             <li className="auction-page-list-item">$5000</li>
-             <li className="auction-page-list-item">$2000</li>
-             <li className="auction-page-list-item">$1500</li>
-             <li className="auction-page-list-item">$300</li>
-             <li className="auction-page-list-item">$100</li>
+       )}
+     </div>
+     <div className="auction-bids">
+       {status === "live" && auction.auctionType !== 'sealed-bid' && (
+         <>
+           <h1 className="auction-page-heading">Bids</h1>
+           <ul className="auction-bids-list">
+             {auction.bids ? (
+               auction.bids.map(bid => (
+                 <li key={bid._id}>
+                   <span>{bid.bidOwner}</span> <span>${bid.bidValue}</span>
+                 </li>
+               ))
+             ) : (
+               <p>No Bids Yet</p>
+             )}
            </ul>
-            </> : <p> Auction In Progress </p>  }
-          
-         </div>
- 
-         <div className="auction-page-section auction-page-highest-bid">
+         </>
+       )}
+     </div>
+     <div className="auction-highest-bid">
+       {status === "live" && (
+         <>
            <h2 className="auction-page-subheading">Highest Bid</h2>
            <h3 className="auction-page-description">$5000</h3>
-         </div>
- 
-         <div className="auction-page-section auction-page-bid-form">
-           <h3 className="auction-page-subheading">Place Bid</h3>
-           <label className="auction-page-bid-label">Amount</label>
-           <input type="number" className="auction-page-bid-input" placeholder="Enter Bid Amount" />
-           <br/><input placeholder="enter your ID " />
-           <br/>  <button className="auction-page-bid-button">Submit Bid</button>
-         </div>
-       </>
+         </>
+       )}
+     </div>
+     {status === "live" && (
+       <form onSubmit={submitBid} className="auction-bid-form">
+         <h3 className="auction-page-subheading">Place Bid</h3>
+         <label className="auction-page-bid-label">Amount</label>
+         <input type="number" onChange={e => setBidValue(e.target.value)} className="auction-page-bid-input" placeholder="Enter Bid Amount" />
+         <br/><input type="text" onChange={e => setBidOwner(e.target.value)} placeholder="Enter your ID" />
+         <br/><button className="auction-page-bid-button">Submit Bid</button>
+       </form>
      )}
- 
      {status === "ended" && (
        <div className="auction-page-section auction-page-ended-bid">
          <span>Bid Ended. Winning Bid: 30B</span>
        </div>
      )}
- 
      {status === "pending" && (
        <div className="auction-page-section auction-page-pending-bid">
          <span>Bid yet to start</span>
@@ -102,6 +147,8 @@ const Auction  = () => {
      )}
    </div>
  </>
+ 
+
  
  );
 };
