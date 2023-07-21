@@ -36,10 +36,13 @@ export class AuctionServie{
     getAuction (id: string ){
         return new Promise<{auction: AuctionType| null}>(async(resolve, reject) =>{
             try{
-                const auction: AuctionType | null = await Auction.findById(id).populate({
-                    path : 'bids',
+                const auction: AuctionType | null = await Auction.findById(id).populate([{
+                    path : 'bids', 
                     select : 'bidOwner auctionId bidTime id bidValue'
-                });
+                }, {
+                    path : 'market', 
+                    select : 'name'
+                }]);
 
                 return resolve({auction})
             }
@@ -59,9 +62,9 @@ export class AuctionServie{
         return new Promise<{auction: AuctionType[]| null}>(async(resolve, reject) =>{
             try{
                 const auction: AuctionType[] | null = await Auction.find({market: id}).populate({
-                    path : 'bids',
+                    path : 'bids market', 
                     select : 'bidOwner auctionId bidTime id bidValue'
-                });;
+                });
 
                 return resolve({auction})
             }

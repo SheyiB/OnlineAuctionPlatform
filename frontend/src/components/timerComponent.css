@@ -1,0 +1,33 @@
+/* CSS for TimerComponent */
+.auction-timer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 2rem;
+    padding: 2rem;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    max-width: 400px;
+  }
+  
+  .timer-heading {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+  }
+  
+  .timer-display {
+    font-size: 2rem;
+    font-weight: bold;
+  }
+  
+  .timer-status {
+    font-size: 1.2rem;
+    margin-top: 1rem;
+    color: #007bff; /* Blue color for "LIVE!" status */
+  }
+  
+  .timer-status.bid-ended {
+    color: #dc3545; /* Red color for "Bid Ended" status */
+  }
+  

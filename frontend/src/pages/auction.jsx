@@ -2,11 +2,12 @@ import { useState, useEffect } from "react";
 import './auction.css'
 import {useParams} from 'react-router-dom';
 import demo from '../assets/demo.jpg'
+import TimerComponent from "../components/timerComponent";
 
 const apiUrl = import.meta.env.VITE_APP_API_URL;
 
 const Auction  = () => {
-    const [status, setStatus] = useState("pending")
+    const [status, setStatus] = useState("live")
     const {auctionId} = useParams();
     const [auction, setAuction] = useState("")
     const [bidOwner, setBidOwner] = useState("")
@@ -14,6 +15,7 @@ const Auction  = () => {
     const [leadingBid, setLeadingBid] = useState(auction.startingPrice)
     const [leadingBidder, setLeadingBidder] = useState('')
     const [bids, setBids] = useState()
+    const expirationTime = '2023-07-21T11:50:00';
 
     useEffect( () => {
       async function getAuction(){
@@ -79,7 +81,7 @@ const Auction  = () => {
    <>
    <div className="auction-page">
      <div className="auction-details">
-       <h1 className="auction-page-heading-main">Seyi Shoe Auction</h1>
+       <h1 className="auction-page-heading-main">{auction && (auction.market.name) } Auctions</h1>
        <div className="auction-page-top">
        <img src={demo} className="auction-page-image" alt="Item" />
        
@@ -93,11 +95,7 @@ const Auction  = () => {
        </div>
        
        {status === "live" && (
-         <div className="auction-timer">
-           <h1 className="auction-page-heading">Time Remaining</h1>
-           <h2 className="auction-page-subheading">24:01</h2>
-           <h2 className="auction-page-subheading">LIVE!</h2>
-         </div>
+         <TimerComponent  expirationTime={expirationTime}/>
        )}
      </div>
      <div className="auction-bids">
@@ -120,9 +118,9 @@ const Auction  = () => {
      </div>
      <div className="auction-highest-bid">
        {status === "live" && (
-         <>
-           <h2 className="auction-page-subheading">Highest Bid</h2>
-           <h3 className="auction-page-description">$5000</h3>
+         <> {auction.auctionType !== 'silent bid'? <><h2 className="auction-page-subheading">Highest Bid</h2>
+         <h3 className="auction-page-description">$5000</h3></> : ""} 
+       
          </>
        )}
      </div>

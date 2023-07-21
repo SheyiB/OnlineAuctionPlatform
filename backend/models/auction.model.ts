@@ -16,7 +16,8 @@ export interface AuctionType{
     bids: Types.ObjectId[] ,
     market: Types.ObjectId,
     duration: number,
-    details : string
+    details : string,
+    endDate: Date
 }
 
 const auctionSchema = new Schema<AuctionType>({
@@ -31,11 +32,29 @@ const auctionSchema = new Schema<AuctionType>({
     leadingBid: [ ],
     bids: [{type: Schema.Types.ObjectId, ref: 'Bid' }],
     market: {type: Schema.Types.ObjectId, ref: 'Market'},
-    duration: {type: Number},
-    details: {type: String, required: true}
+    duration: {type: Number, default: 1},
+    details: {type: String, required: true},
+    endDate : {type: Date}
 },
 {
     timestamps: true
 })
+
+auctionSchema.pre('save', function (next) {
+    // Ensure duration is available and greater than zero
+    if (this.duration && this.duration > 0) {
+      // Calculate the end date based on the start date and duration
+      const endDate = new Date(this.date);
+      endDate.setHours(endDate.getHours() + this.duration);
+  
+      // Set the calculated endDate to the model
+      this.endDate = endDate;
+    }
+  
+    next();
+  });
+  
+
+
 
 export const Auction = model<AuctionType>('Auction', auctionSchema)

@@ -35,17 +35,18 @@ const AuctioneerDashboard  = () => {
             </button>
             { create && (
                 <div className="popup-container visible">
-                <form className="popup-form" >
+                <span className="popup-form" >
                     <NewMarket id={_id} />
-                </form>
+                </span>
                 </div>
             )}
 
                     <>
-                    <div className="markets-container">
+                    {
+                        <div className="markets-container">
                         <h1>Markets</h1>
                         <div className="market-row">
-                        {auctioneermarket && auctioneermarket.market.length > 1 ? (
+                        {auctioneermarket && auctioneermarket.market.length > 0 ? (
                             auctioneermarket.market.map(market => (
                             <MarketComponent
                                 key={market._id}
@@ -62,6 +63,8 @@ const AuctioneerDashboard  = () => {
                         </div>
                     </div>
                    
+                    
+                    }
                     </>
             </div>
 

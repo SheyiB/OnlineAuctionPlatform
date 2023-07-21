@@ -37,8 +37,6 @@ const EditMarket = () => {
       }
       getMarketAutions();
   },[]) 
- 
-    console.log(marketAuction)
     return(
         <div className="view-auction-container">
               <h2 >{firstname}'s Auction</h2>
@@ -55,8 +53,8 @@ const EditMarket = () => {
             {marketAuction && ( marketAuction.map(auction => 
             <ViewAuctionComponent  
             auctionDetails={auction.details}
-            auctionType={auction.autionType}
-            date={auction.date}
+            auctionType={auction.auctionType}
+            date={auction.date.slice(0,10)}
             image={auction.image}
             item={auction.item}
             startingPrice={auction.startingPrice}

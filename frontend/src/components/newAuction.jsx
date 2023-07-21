@@ -4,10 +4,9 @@ import './newAuction.css';
 const apiUrl = import.meta.env.VITE_APP_API_URL;
 
 const NewAuction = ({marketId}) => {
-    console.log(marketId)
     
     const [item, setItem] = useState()
-    const [auctionType, setAuctionType] = useState()
+    const [auctionType, setAuctionType] = useState("english")
     const [category, setCategory] = useState()
     const [image, setImage] = useState()
     const [details, setDetails] = useState()
@@ -27,8 +26,7 @@ const NewAuction = ({marketId}) => {
         })
     }
 
-    console.log(auctionType, item, category, image, details, date, startingPrice, duration,  marketId)
-    return (
+       return (
         <div className="auction-form-container-min">
             <form onSubmit={createAuction}>
                 <label> Item Name </label><br/>
