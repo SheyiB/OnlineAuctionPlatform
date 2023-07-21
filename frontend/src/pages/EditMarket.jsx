@@ -48,7 +48,7 @@ const EditMarket = () => {
             { create && (
                 <div className="popup-container visible">
                 <div className="popup-form" >
-                    <NewAuction id={_id} />
+                    <NewAuction marketId={marketId} />
                 </div>
                 </div>
             )}

@@ -4,6 +4,7 @@ import './newAuction.css';
 const apiUrl = import.meta.env.VITE_APP_API_URL;
 
 const NewAuction = ({marketId}) => {
+    console.log(marketId)
     
     const [item, setItem] = useState()
     const [auctionType, setAuctionType] = useState()
@@ -16,6 +17,7 @@ const NewAuction = ({marketId}) => {
 
     const createAuction = async(e) => {
         let auction = {auctionType, item, category, image, details, date, startingPrice, duration, market: marketId}
+        console.log(auction)
         await fetch(`${apiUrl}/auction/`,{
             method: 'POST',
             headers: {
@@ -25,6 +27,7 @@ const NewAuction = ({marketId}) => {
         })
     }
 
+    console.log(auctionType, item, category, image, details, date, startingPrice, duration,  marketId)
     return (
         <div className="auction-form-container-min">
             <form onSubmit={createAuction}>
@@ -35,7 +38,7 @@ const NewAuction = ({marketId}) => {
                 <input type="text" onChange={(e) => setDetails(e.target.value)}/><br/>
             
                 <label>Select Auction Type</label> <br/>
-                <select value={auctionType} onChange={(e)=>{setAuctionType(e.value)}}>
+                <select value={auctionType} onChange={(e)=>{setAuctionType(e.target.value)}}>
                     <option value="english">English</option>
                     <option value="dutch">Dutch</option>
                     <option value="silent bid">Silent Bid</option>
@@ -45,7 +48,7 @@ const NewAuction = ({marketId}) => {
 
 
                 <label> Image </label><br/>
-                <input type="text" onChange={(e) => setImage(e.target.value)}/><br/>
+                <input type="file" onChange={(e) => setImage(e.target.value)}/><br/>
 
 
                 <label> Category </label><br/>
@@ -57,7 +60,7 @@ const NewAuction = ({marketId}) => {
                 <label> Starting/Bid Increment Price </label>
                 <input type="number" onChange={(e) => setStartingPrice(e.target.value)}/><br/>
 
-                <label> Duration </label><br/>
+                <label> Duration  (in hours)</label><br/>
                 <input type="number" onChange={(e) => setDuration(e.target.value)}/><br/>
 
                 <button type="submit" > Create </button>
