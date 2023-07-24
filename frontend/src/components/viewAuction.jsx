@@ -1,9 +1,13 @@
+import './viewAuction.css'
+
+import jersey from '../assets/jersey.jpg'
+
 const ViewAuctionComponent = ({image, item, auctionType, startingPrice, auctionDetails, date}) => {
     console.log(auctionDetails)
     return(
         <>
         <div className="view-market-container">
-            <img src={image} alt="Market Item" className="view-market-image" />
+            <img src={jersey} alt="Market Item" className="view-market-image" />
             <div className="view-market-details">
             <h2 className="view-market-heading">{item}</h2>
             <span className="view-market-subheading"> Auction Type: {auctionType}</span>
