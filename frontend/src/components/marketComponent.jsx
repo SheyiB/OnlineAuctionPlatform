@@ -1,8 +1,6 @@
 import './marketcomponent.css'
 import {Link} from 'react-router-dom'
 
-const apiUrl = import.meta.env.VITE_APP_API_URL;
-
 
 const MarketComponent = ({ name, id, details, image}) => {
 

@@ -10,6 +10,7 @@ const TimerComponent = ({ expirationTime }) => {
       const currentTime = new Date().getTime();
       const expirationTimestamp = new Date(expirationTime).getTime();
       const timeDifference = expirationTimestamp - currentTime;
+     // console.log(currentTime, expirationTime, timeDifference)
 
       if (timeDifference <= 0) {
         setStatus('Bid Ended');

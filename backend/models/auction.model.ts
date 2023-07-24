@@ -43,18 +43,24 @@ const auctionSchema = new Schema<AuctionType>({
 auctionSchema.pre('save', function (next) {
     // Ensure duration is available and greater than zero
     if (this.duration && this.duration > 0) {
-      // Calculate the end date based on the start date and duration
-      const endDate = new Date(this.date);
-      endDate.setHours(endDate.getHours() + this.duration);
+      const { date, duration } = this;
+      console.log(date)
+      const durationInMilliseconds = duration * 3600000; // Convert duration to milliseconds
   
-      // Set the calculated endDate to the model
+      // Get the time zone offset in minutes and convert it to milliseconds
+      const timezoneOffsetMilliseconds = date.getTimezoneOffset() * 60000;
+  
+      // Calculate the endDate, considering the time zone offset
+      const endDate = new Date(date.getTime() + durationInMilliseconds - timezoneOffsetMilliseconds);
       this.endDate = endDate;
+      this.date = date;
+
+      console.log(date, " end on ", endDate)
     }
   
     next();
   });
   
-
 
 
 export const Auction = model<AuctionType>('Auction', auctionSchema)

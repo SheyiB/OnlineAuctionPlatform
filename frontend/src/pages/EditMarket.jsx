@@ -3,6 +3,7 @@ import ViewAuctionComponent from '../components/viewAuction';
 import {useParams, useNavigate} from 'react-router-dom';
 import {Link} from 'react-router-dom'
 import NewAuction from '../components/newAuction';
+import './editMarket.css'
 
 const apiUrl = import.meta.env.VITE_APP_API_URL;
 
@@ -50,6 +51,7 @@ const EditMarket = () => {
                 </div>
                 </div>
             )}
+            <div className='auction-list'>
             {marketAuction && ( marketAuction.map(auction => 
             <ViewAuctionComponent  
             auctionDetails={auction.details}
@@ -59,7 +61,8 @@ const EditMarket = () => {
             item={auction.item}
             startingPrice={auction.startingPrice}
             key={auction._id}
-            />) )} 
+            />) )}
+            </div> 
         </div>
 
 

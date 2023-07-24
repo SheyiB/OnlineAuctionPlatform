@@ -14,8 +14,27 @@ const NewAuction = ({marketId}) => {
     const [startingPrice, setStartingPrice] = useState()
     const [duration, setDuration] = useState()
 
+    // Helper function to format the date for the local time zone
+    const formatLocalDateTime = (dateTimeString) => {
+        const date = new Date(dateTimeString);
+        const localDateTimeString = date.toLocaleString('en-GB', {
+        timeZone: 'UTC', // Specify the input date is in UTC format
+        hour12: false, // Use 24-hour format
+        });
+        return localDateTimeString;
+    };
+
+  
+
     const createAuction = async(e) => {
-        let auction = {auctionType, item, category, image, details, date, startingPrice, duration, market: marketId}
+        
+        const dateString = date;
+        const originalDate = new Date(dateString);
+        const newDate = new Date(originalDate);
+        newDate.setHours(newDate.getHours() + 1);
+        const updatedDate = newDate.toISOString()
+
+        let auction = {auctionType, item, category, image, details, date: updatedDate, startingPrice, duration, market: marketId}
         console.log(auction)
         await fetch(`${apiUrl}/auction/`,{
             method: 'POST',
@@ -53,7 +72,7 @@ const NewAuction = ({marketId}) => {
                 <input type="text" onChange={(e) => setCategory(e.target.value)}/><br/>
 
                 <label> Date </label><br/>
-                <input type="datetime-local" onChange={(e) => setDate(e.target.value)}/><br/>
+                <input type="datetime-local" onChange={(e) => setDate(e.target.value)} /><br/>
 
                 <label> Starting/Bid Increment Price </label>
                 <input type="number" onChange={(e) => setStartingPrice(e.target.value)}/><br/>
