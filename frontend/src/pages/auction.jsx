@@ -3,6 +3,7 @@ import './auction.css'
 import {useParams} from 'react-router-dom';
 import demo from '../assets/demo.jpg'
 import TimerComponent from "../components/timerComponent";
+import jersey from '../assets/jersey.jpg';
 
 const apiUrl = import.meta.env.VITE_APP_API_URL;
 
@@ -151,7 +152,7 @@ const Auction  = () => {
      <div className="auction-details">
        <h1 className="auction-page-heading-main">{auction && (auction.market.name) } Auctions</h1>
        <div className="auction-page-top">
-       <img src={demo} className="auction-page-image" alt="Item" />
+       <img src={jersey} className="auction-page-image" alt="Item" />
        
        <div className="auction-description">
          <h1 className="auction-page-heading">{auction.item}</h1>

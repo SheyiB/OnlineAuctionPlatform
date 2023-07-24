@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import AuctionComponent from "../components/auctionComponent";
 import {useParams} from 'react-router-dom';
 import './market.css'
+import jersey from '../assets/jersey.jpg'
 
 const apiUrl = import.meta.env.VITE_APP_API_URL;
 
@@ -28,7 +29,7 @@ const Market  = () => {
         <h1>Seyi's Big Shoe Auctions</h1>
         
         <div className='auction-market'>
-        {market && market.auction.length>0 ? market.auction.map(auction => <AuctionComponent auctionItem={auction.item} auctionDate={auction.date} auctionDuration={auction.duration} auctionType={auction.auctionType} itemImage={auction.image} startingBid={auction.startingPrice} status={auction.status} key={auction._id} auctionId={auction._id}/>) : "No Auction Yet"}
+        {market && market.auction.length>0 ? market.auction.map(auction => <AuctionComponent auctionItem={auction.item} auctionDate={auction.date} auctionDuration={auction.duration} auctionType={auction.auctionType} itemImage={jersey} startingBid={auction.startingPrice} status={auction.status} key={auction._id} auctionId={auction._id}/>) : "No Auction Yet"}
         </div>
       </div>
       
