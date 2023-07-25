@@ -26,6 +26,7 @@ const Auction  = () => {
       async function getAuction(){
           let auctionData = await fetch(`${apiUrl}/auction/${auctionId}`).then(d=> d.json())
           setAuction(auctionData.auction)
+          setStatus(isBidTimingValid(auctionData.date, auctionData.endDate))
         //  setStatus(auctionData.auction.status)
          setBids(auctionData.bids)
       }
@@ -58,13 +59,13 @@ const Auction  = () => {
       
         if (currentTime < startTime) {
           // The auction has not started yet
-          return 'The auction has not started. Bids are not valid.';
+          return 'pending';
         } else if (currentTime >= startTime && currentTime <= endTime) {
           // The auction is in progress
-          return 'The auction is in progress. Bids are valid.';
+          return 'live';
         } else {
           // The auction has ended
-          return 'The auction has ended. Bids are not valid.';
+          return 'ended';
         }
       }
       
@@ -158,7 +159,7 @@ const Auction  = () => {
          <h1 className="auction-page-heading">{auction.item}</h1>
          <h2 className="auction-page-details">{auction.details ? auction.details : `Auction for ${auction.item}` }</h2>
          <h2 className="auction-page-subheading">Auction Type: {auction.auctionType}</h2>
-         <h2 className="auction-page-subheading">Auction Status: {auction.status}</h2>
+         <h2 className="auction-page-subheading">Auction Status: {status}</h2>
          <h2 className="auction-page-subheading">{auction.status == 'pending' ? `Auction Date : ${auction.date.slice(0,10)}` : ""}</h2>
          <h2 className="auction-page-subheading">Auction Start Time: {auction.date?  ndate.toLocaleString('en-US', {hour: 'numeric', minute: 'numeric',  hour12: true,timeZone: 'UTC'}): ""}</h2>
          <h2 className="auction-page-subheading">Auction End Time: {auction.endDate?  edate.toLocaleString('en-US', {hour: 'numeric', minute: 'numeric',  hour12: true,timeZone: 'UTC'}): ""}</h2>
