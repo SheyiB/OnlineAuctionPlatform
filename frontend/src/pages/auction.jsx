@@ -18,17 +18,14 @@ const Auction  = () => {
     const [bids, setBids] = useState()
     const expirationTime = auction.endDate;
 
-    console.log(auction)
-
-    console.log(expirationTime)
-    console.log(auction.date)
     useEffect( () => {
       async function getAuction(){
           let auctionData = await fetch(`${apiUrl}/auction/${auctionId}`).then(d=> d.json())
           setAuction(auctionData.auction)
-          setStatus(isBidTimingValid(auctionData.date, auctionData.endDate))
-        //  setStatus(auctionData.auction.status)
-         setBids(auctionData.bids)
+          setStatus(isBidTimingValid(auctionData.auction.date, auctionData.auction.endDate))
+          setBids(auctionData.bids)
+          console.log(isBidTimingValid(auctionData.auction.date, auctionData.auction.endDate))
+          
       }
 
       getAuction();
@@ -54,13 +51,20 @@ const Auction  = () => {
       function isBidTimingValid(startTimeString, endTimeString) {
         const currentTime = new Date();
       
+       
         const startTime = new Date(startTimeString);
+        const startTimeUTC = new Date(startTime.getTime() + startTime.getTimezoneOffset() * 60000);
+
         const endTime = new Date(endTimeString);
+        const endTimeUTC = new Date(endTime.getTime() + endTime.getTimezoneOffset() * 60000);
+
+        console.log(currentTime, startTimeUTC, endTimeUTC)
       
-        if (currentTime < startTime) {
+        if (currentTime < startTimeUTC) {
+          console.log(currentTime ,  startTime)
           // The auction has not started yet
           return 'pending';
-        } else if (currentTime >= startTime && currentTime <= endTime) {
+        } else if (currentTime >= startTimeUTC && currentTime <= endTimeUTC) {
           // The auction is in progress
           return 'live';
         } else {

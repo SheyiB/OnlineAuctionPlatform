@@ -35,14 +35,14 @@ const NewAuction = ({marketId}) => {
         const updatedDate = newDate.toISOString()
 
         let auction = {auctionType, item, category, image, details, date: updatedDate, startingPrice, duration, market: marketId}
-        console.log(auction)
+        console.log(auction.duration, auction.date)
         await fetch(`${apiUrl}/auction/`,{
             method: 'POST',
             headers: {
                 'Content-type' : 'application/json',
             },
             body: JSON.stringify(auction),
-        })
+        }).then(data => data.json())
     }
 
        return (
