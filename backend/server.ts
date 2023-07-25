@@ -28,7 +28,7 @@ if (!process.env.PORT){
 const PORT: number = parseInt(process.env.PORT as string, 10);
 
 
-const app = express();
+export const app = express();
 
 
 app.use(cors({credentials: true}));

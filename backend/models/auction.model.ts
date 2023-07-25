@@ -51,7 +51,8 @@ auctionSchema.pre('save', function (next) {
       const timezoneOffsetMilliseconds = date.getTimezoneOffset() * 60000;
   
       // Calculate the endDate, considering the time zone offset
-      const endDate = new Date(date.getTime() + durationInMilliseconds - timezoneOffsetMilliseconds);
+      console.log(date.getTime(), durationInMilliseconds, timezoneOffsetMilliseconds)
+      const endDate = new Date(date.getTime() + durationInMilliseconds);
       this.endDate = endDate;
       this.date = date;
 
