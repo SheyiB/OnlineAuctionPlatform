@@ -15,6 +15,7 @@ export interface AuctionType{
     leadingBid: [bid: number, bidder: string],
     bids: Types.ObjectId[] ,
     market: Types.ObjectId,
+    bidders: [],
     duration: number,
     details : string,
     endDate: Date
@@ -32,6 +33,7 @@ const auctionSchema = new Schema<AuctionType>({
     leadingBid: [ ],
     bids: [{type: Schema.Types.ObjectId, ref: 'Bid' }],
     market: {type: Schema.Types.ObjectId, ref: 'Market'},
+    bidders: [],
     duration: {type: Number, default: 1},
     details: {type: String, required: true},
     endDate : {type: Date}

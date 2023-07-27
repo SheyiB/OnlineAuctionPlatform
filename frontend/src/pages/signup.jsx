@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from 'react-router-dom';
 
 
 import './signup.css'
@@ -10,8 +11,9 @@ const Signup  = () => {
     const [phone, setPhone] = useState(0)
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
-    const [date, setDate] = useState('')
     const [isLoading, setIsLoading] = useState(false)
+    const navigate = useNavigate();
+
  
   const createUser = async(firstname, lastname, email, phone, dob, password) => {
     const newUser = {firstname, lastname, email, phone, dob, password}
@@ -34,7 +36,9 @@ const Signup  = () => {
             if(user.status == 201){
              // NotificationManager.success("Login Successful", "", 1000);
               //Router.push('/');
+
               console.log('Auctioneer Registered!')
+              navigate('/')
             }
             else{
               setIsLoading(false)
@@ -73,9 +77,6 @@ const Signup  = () => {
           
           <label>Phone</label>
           <input type="number" className="input-field" onChange={(e) => setPhone(Number(e.target.value))} /><br/>
-          
-          <label>Date Of Birth</label>
-          <input placeholder="Date of Birth" type="date" className="input-field" onFocus={(e) => e.target.type='date'} required onChange={(e) => setDate(e.target.value)} />
           
           <label>Password</label>
           <input type="password" className="input-field" onChange={(e) => setPassword(e.target.value)} /><br/>

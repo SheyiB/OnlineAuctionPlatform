@@ -13,40 +13,89 @@ const Auction  = () => {
     const [auction, setAuction] = useState("")
     const [bidOwner, setBidOwner] = useState("")
     const [bidValue, setBidValue] = useState("")
-    const [leadingBid, setLeadingBid] = useState(auction.startingPrice)
+    const [leadingBid, setLeadingBid] = useState()
     const [leadingBidder, setLeadingBidder] = useState('')
     const [bids, setBids] = useState()
     const expirationTime = auction.endDate;
+    const [bidsMade, setBidsMade] = useState(0)
+    const [viewWinner, setViewWinner] = useState(false)
+    const [bidWinner, setBidWinner ] = useState("")
+
+  
 
     useEffect( () => {
       async function getAuction(){
+          console.log('Auction Data Updated')
           let auctionData = await fetch(`${apiUrl}/auction/${auctionId}`).then(d=> d.json())
           setAuction(auctionData.auction)
           setStatus(isBidTimingValid(auctionData.auction.date, auctionData.auction.endDate))
           setBids(auctionData.bids)
-          console.log(isBidTimingValid(auctionData.auction.date, auctionData.auction.endDate))
+          setLeadingBid(auction.leadingBid && auction.leadingBid.length > 1 ? auction.leadingBid[0].bidValue : auction.startingPrice)
           
+  
       }
 
       getAuction();
-  }, [])
+  }, [bidsMade])
+
+
+  const getWinner = () => {
+    setViewWinner(true)
+    if(auction.auctionType == 'vickery'){
+
+      const sortedItems = auction.bids.sort((a, b) => b.bidValue - a.bidValue);
+
+      const zaWinner = {bidOwner: sortedItems[0].bidOwner ,bidValue: sortedItems[0].bidValue, bidToPay: sortedItems[1].bidValue };
+      console.log('WINNER!!!!')
+      console.log(zaWinner)
+      setBidWinner(zaWinner)
+    }
+    else if(auction.auctionType == 'free-penny'){
+      
+      const lastAddedBid = auction.bids[auction.bids.length - 1];
+      setBidWinner(lastAddedBid.bidValue)
+    }
+
+    else{
+      console.log("hjjj",auction.leadingBid[0].bidValue)
+      setBidWinner(auction.leadingBid[0].bidValue)
+    }
+
+  }
+  const submitBid = async(e) => {
+    setBidsMade(bidsMade+1)
+    console.log(bidsMade)
+    e.preventDefault()
+      if (isBidTimingValid(auction.date, auction.endDate) == 'live'){
+
+        onBidSubmit(bidValue, bidOwner)
+          
+        
+           
+      }
+     
+  }
     
-  const ndate = new Date(auction.date);
+  console.log(auction)
+ const ndate = new Date(auction.date);
   const edate = new Date(auction.endDate)
 
-    const submitBid = async() => {
-         const time = new Date()
-         const bid = {bidOwner: bidOwner, bidValue: bidValue, auctionId: auctionId, bidTime: time}
-         console.log(bid)
-         await fetch(`${apiUrl}/bids/`,{
-            method: 'POST',
-            headers: {
-                'Content-type' : 'application/json',
-            },
-            body: JSON.stringify(bid),
-        }).then(d => d.json()).catch((e)=>{console.log(e)})    
-      }
+  const createBid = async() => {
+    const time = new Date()
+    const timeUTC = new Date(time.getTime() + time.getTimezoneOffset() * 60000);
+    
+    const bid = {bidOwner: bidOwner, bidValue: bidValue, auctionId: auctionId, bidTime: timeUTC}
+    
+    await fetch(`${apiUrl}/bids/`,{
+    method: 'POST',
+    headers: {
+        'Content-type' : 'application/json',
+    },
+    body: JSON.stringify(bid),
+}).then(d => d.json()).catch((e)=>{console.log(e)})
+  }
 
+   
 
       function isBidTimingValid(startTimeString, endTimeString) {
         const currentTime = new Date();
@@ -58,10 +107,10 @@ const Auction  = () => {
         const endTime = new Date(endTimeString);
         const endTimeUTC = new Date(endTime.getTime() + endTime.getTimezoneOffset() * 60000);
 
-        console.log(currentTime, startTimeUTC, endTimeUTC)
+        //console.log(currentTime, startTimeUTC, endTimeUTC)
       
         if (currentTime < startTimeUTC) {
-          console.log(currentTime ,  startTime)
+          //console.log(currentTime ,  startTime)
           // The auction has not started yet
           return 'pending';
         } else if (currentTime >= startTimeUTC && currentTime <= endTimeUTC) {
@@ -91,19 +140,34 @@ const Auction  = () => {
     
    
    const onBidSubmit = async(bidValue, bidOwner)=>{
+
+    if(!auction.bidders.includes(bidOwner)){
+        alert(`Invalid Bidder, Go to http://localhost:5173/market/${auctionId} to generate a bid id`)
+        return false
+    }
       
       if(auction.auctionType == 'english'){
 
-            if(bidValue > leadingBid ){
+          const leadBid = auction.leadingBid.length > 1? auction.leadingBid[0].bidValue : auction.startingPrice 
+            
+            if(bidValue > leadBid){
+              console.log('Valid!')
+              createBid()
               const data = {leadingBid: [{bidOwner, bidValue}]}
+
+              setBids(...[{bidOwner, bidValue}])
               updateAuction(data) 
               setLeadingBid(bidValue)
-               setLeadingBidder(bidOwner)
+              setLeadingBidder(bidOwner)
+              return true
                
                
             }
             else{
-               return 'Invalid Bid, Bid Must be greater than Leading Bid'
+              console.log(bidValue, leadBid)
+               console.log('Invalid Bid, Bid Must be greater than Leading Bid')
+               alert('Invalid Bid, Bid Must be greater than Leading Bid')
+               return false
             }
       }
       else if(auction.auctionType == 'dutch'){
@@ -111,35 +175,74 @@ const Auction  = () => {
                setLeadingBidder(bidOwner)
                const data = {leadingBid: [{bidOwner, bidValue}], winner: bidOwner}
                updateAuction(data) 
+               return true
                
                //endAuction
       }
-      else if(auction.auctionType == 'sealedBid'){
-        const data =""  
-        setBids(...bids, [{bidOwner, bidValue}])
+      else if(auction.auctionType == 'silent bid'){
+        console.log("bidmade")
+        console.log(auction.bids.length)
+        if(auction && auction.bids.length < 1){
+          
+          createBid()
+          const data = {leadingBid: [{bidOwner, bidValue}]}
+          updateAuction(data) 
+          setLeadingBid(bidValue)
+        }
+        else if(bidValue > auction.leadingBid[0].bidValue){
+          createBid()
+          const data = {leadingBid: [{bidOwner, bidValue}]}
+          updateAuction(data) 
+          setLeadingBid(bidValue)
+        }
+        else{
+          createBid()
+        }
+        return true
 
    }
 
    else if(auction.auctionType == 'vickery')  {
     if(bidValue > leadingBid ){
+      console.log('Valid!')
+      createBid()
+      const data = {leadingBid: [{bidOwner, bidValue}]}
+
+      setBids(...[{bidOwner, bidValue}])
+      updateAuction(data) 
       setLeadingBid(bidValue)
       setLeadingBidder(bidOwner)
-      setBids(...bids, [{bidOwner, bidValue}])
+      return true
+       
+       
   
    }
    else{
-      return 'Invalid Bid, Bid Must be greater than Leading Bid'
+      console.log('Invalid Bid, Bid Must be greater than Leading Bid')
+      alert('Invalid Bid, Bid Must be greater than Leading Bid')
+      return false
    }
     
    }
 
-   else if(auction.auctionType == 'free penny'){
-    if(bidValue >= auction.startingPrice){
-      setLeadingBid(leadingBid+bidValue)
+   else if(auction.auctionType == 'free-penny'){
+    const inc = auction.startingPrice
+    console.log(bidValue, auction.leadingBid[0].bidValue, inc)
+    if(bidValue - auction.leadingBid[0].bidValue >= inc){
+      console.log('Valid!')
+      createBid()
+      const data = {leadingBid: [{bidOwner, bidValue}]}
+      console.log(data)
+      setBids(...[{bidOwner, bidValue}])
+      updateAuction(data) 
+      setLeadingBid(bidValue)
       setLeadingBidder(bidOwner)
+      
+      return true
     }
     else{
-      return 'Bid must be greater than increment!'
+      alert( 'Bid must be greater than increment!')
+      return false
     }
    }
 
@@ -148,9 +251,9 @@ const Auction  = () => {
 
     
 
-  if(auction){
-   console.log(auction)
-  }
+  // if(auction){
+  //  console.log(auction)
+  // }
  return (
    <>
    <div className="auction-page">
@@ -178,6 +281,9 @@ const Auction  = () => {
      <div className="auction-bids">
        {status === "live" && auction.auctionType !== 'sealed-bid' && (
          <>
+           
+           { auction && auction.auctionType !== 'silent bid' &&(
+           <>
            <h1 className="auction-page-heading">Bids</h1>
            <ul className="auction-bids-list">
              {auction.bids ? (
@@ -189,14 +295,23 @@ const Auction  = () => {
              ) : (
                <p>No Bids Yet</p>
              )}
-           </ul>
+           </ul></>)}
          </>
        )}
      </div>
      <div className="auction-highest-bid">
-       {status === "live" && (
-         <> {auction.auctionType !== 'silent bid'? <><h2 className="auction-page-subheading">Highest Bid</h2>
-         <h3 className="auction-page-description">$5000</h3></> : ""} 
+       {status === "live" && auction.leadingBid && (
+         <> {auction.auctionType !== 'silent bid'? 
+         <>
+         <h2 className="auction-page-subheading"> 
+         {auction.auctionType == 'dutch' || auction.auctionType == 'free-penny' ?  "Current Bid" : "Highest Bid"}
+         </h2>
+         
+         <h3 className="auction-page-description">
+        
+          ${auction.leadingBid.length > 1? auction.leadingBid[0].bidValue : auction.startingPrice}
+        </h3>
+        </> : ""} 
        
          </>
        )}
@@ -212,10 +327,17 @@ const Auction  = () => {
      )}
      {status === "ended" && (
        <div className="auction-page-section auction-page-ended-bid">
-         <span>Bid Ended. Winning Bid: 30B</span>
+         <span>Bid Ended</span><br/>
+         <button onClick={getWinner}>View Bid Winner</button>
+         {viewWinner && ( <span> 
+          
+           {auction.auctionType !== 'vickery' ? `Winning Bid : $ ${bidWinner}` : `Winning Bid: ${bidWinner.bidValue} - Amount to Pay : ${bidWinner.bidToPay}`}
+            {/* ${ auction.leadingBid? auction.leadingBid[0].bidValue : ""}   */}
+           </span>)
+          }
        </div>
      )}
-     {status === "pending" && (
+     {status === "pending"  &&  ( 
        <div className="auction-page-section auction-page-pending-bid">
          <span>Bid yet to start</span>
        </div>

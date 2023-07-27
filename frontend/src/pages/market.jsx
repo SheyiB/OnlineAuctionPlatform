@@ -26,7 +26,7 @@ const Market  = () => {
     const auctions = [{auctionItem : "Stone", auctionType : "Silent Auction", itemImage: "stone.jpg", auctionDate: "12-Aug-2023", auctionDuration: "5days", startingBid: "None", status: "pending", id: "28bjsj92n*3@"}, {auctionItem : "Stone", auctionType : "Silent Auction", itemImage: "stone.jpg", auctionDate: "12-Aug-2023", auctionDuration: "5days", startingBid: "None", status: "pending", id: "28bjsj3492n*3@"}, {auctionItem : "Stone", auctionType : "Silent Auction", itemImage: "stone.jpg", auctionDate: "12-Aug-2023", auctionDuration: "5days", startingBid: "None", status: "pending", id: "28bjsj92n*3@!@" }, {auctionItem : "Stone", auctionType : "Silent Auction", itemImage: "stone.jpg", auctionDate: "12-Aug-2023", auctionDuration: "5days", startingBid: "None", status: "pending", id: "28bjsj92342134n*3@"}]
     return (
         <div className="auctions-container">
-        <h1>Seyi's Big Shoe Auctions</h1>
+        <h1>{market? market.name : ""}</h1>
         
         <div className='auction-market'>
         {market && market.auction.length>0 ? market.auction.map(auction => <AuctionComponent auctionItem={auction.item} auctionDate={auction.date} auctionDuration={auction.duration} auctionType={auction.auctionType} itemImage={jersey} startingBid={auction.startingPrice} status={auction.status} key={auction._id} auctionId={auction._id}/>) : "No Auction Yet"}

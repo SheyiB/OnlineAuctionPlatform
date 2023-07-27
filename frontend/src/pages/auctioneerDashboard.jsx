@@ -2,6 +2,7 @@ import MarketComponent from '../components/marketComponent'
 import NewMarket from '../components/newMarket';
 import { useEffect, useState } from 'react';
 import './dashboard.css'
+import demo from '../assets/demo.jpg'
 
 const apiUrl = import.meta.env.VITE_APP_API_URL;
 
@@ -52,7 +53,7 @@ const AuctioneerDashboard  = () => {
                                 key={market._id}
                                 details={market.details}
                                 id={market._id}
-                                image={market.image}
+                                image={demo}
                                 name={market.name}
                         
                             />

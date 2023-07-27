@@ -7,11 +7,14 @@ const TimerComponent = ({ expirationTime }) => {
   useEffect(() => {
     // Function to calculate the remaining time
     const calculateRemainingTime = () => {
-      const currentTime = new Date().getTime();
-      const expirationTimestamp = new Date(expirationTime).getTime();
-      const timeDifference = expirationTimestamp - currentTime;
-     // console.log(currentTime, expirationTime, timeDifference)
 
+      const currentTime = new Date();
+      const currentTimeUTC = new Date(currentTime.getTime() + currentTime.getTimezoneOffset() * 60000).getTime()
+   
+      const expirationTimestamp = new Date(expirationTime);
+      const expirationTimestampUTC = new Date(expirationTimestamp.getTime() + expirationTimestamp.getTimezoneOffset() * 60000).getTime()
+      const timeDifference = expirationTimestampUTC - currentTimeUTC -3600000 ;
+    
       if (timeDifference <= 0) {
         setStatus('Bid Ended');
         setRemainingTime('');
