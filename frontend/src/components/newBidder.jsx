@@ -27,36 +27,41 @@ function generateShortBidderId(mongoObjectId, length = 6) {
     return hashedId;
   }
   
-const updateBidders = async(bidderId, auctionId) =>{
-    const [publicName, setPublicName] = useState()
-    let auctionData = await fetch(`${apiUrl}/auction/${auctionId}`).then(d=> d.json())
-    console.log(auctionData.auction)
-    let vbidders = auctionData.auction.bidders
-    if(!vbidders){
-        vbidders = [bidderId]
-    }
-    else{
-        vbidders.push(bidderId) 
-    }
-    console.log(vbidders)
-    
-    const response = await fetch(`${apiUrl}/auction/${auctionId}`,{
-        method: 'PUT',
-        headers: {
-            'Content-type' : 'application/json',
-        },
-        body: JSON.stringify({bidders: vbidders}),
-    })
-    .then(d => d.json())
-    
-    .catch((e)=>{console.log(e)})
 
-} 
   
 const NewBidder = ({auctionId}) => {
+    const [publicName, setPublicName] = useState()
     const bidId = `BID/USER/${Math.round(Math.random()*230)}`
     const shortBidderId = `BID/USER/${generateShortBidderId(auctionId, 5)}`;
+    
+    const updateBidders = async(bidderId, auctionId) =>{
+   
+        let auctionData = await fetch(`${apiUrl}/auction/${auctionId}`).then(d=> d.json())
+        console.log(auctionData.auction)
+        let vbidders = auctionData.auction.bidders
+        if(!vbidders){
+            vbidders = [bidderId]
+        }
+        else{
+            vbidders.push(bidderId) 
+        }
+        console.log(vbidders)
+        
+        const response = await fetch(`${apiUrl}/auction/${auctionId}`,{
+            method: 'PUT',
+            headers: {
+                'Content-type' : 'application/json',
+            },
+            body: JSON.stringify({bidders: vbidders}),
+        })
+        .then(d => d.json())
+        
+        .catch((e)=>{console.log(e)})
+    
+    } 
     updateBidders(shortBidderId, auctionId)
+
+
     return (
         <div className="bid-confirmation">
             <span>
