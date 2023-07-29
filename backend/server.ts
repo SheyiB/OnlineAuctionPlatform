@@ -1,5 +1,5 @@
 //import Node packages
-import express from 'express';
+import express, {Application} from 'express';
 import * as dotenv from "dotenv";
 import {db} from './db';
 import cors from 'cors';
@@ -28,7 +28,7 @@ if (!process.env.PORT){
 const PORT: number = parseInt(process.env.PORT as string, 10);
 
 
-export const app = express();
+export const app: Application = express();
 
 
 app.use(cors({credentials: true}));
