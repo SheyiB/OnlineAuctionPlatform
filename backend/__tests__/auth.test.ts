@@ -23,3 +23,14 @@ describe("GET /api/signup", ()=>{
         expect(res.body.name).toBeGreaterThan(0);
     })
 })
+
+
+describe("GET /api/login", ()=>{
+    it("should login User", async () => {
+        const res = await request(app).post("/api/auth/login").send({
+            "": "",
+        });
+        expect(res.statusCode).toBe(201);
+        expect(res.body.name).toBeGreaterThan(0);
+    })
+})
