@@ -16,7 +16,7 @@ afterEach(async () => {
 
 describe("GET /api/signup", ()=>{
     it("should signup User", async () => {
-        const res = await request(app).post("/api/auth/signup").send({
+        const res = await request(app).post("http://localhost:8080/auction-api/bid").send({
             
         });
         expect(res.statusCode).toBe(201);
