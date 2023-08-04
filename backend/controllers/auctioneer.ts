@@ -16,6 +16,7 @@ const Market = new MarketServie();
 
 const Auctioneer = new AuctioneerService();
 
+
 export const createMarket = async (req: Request, res: Response) =>{
     try{
         const market = await Market.createMarket(req.body);
