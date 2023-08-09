@@ -177,7 +177,6 @@ const Auction  = () => {
                updateAuction(data) 
                return true
                
-               //endAuction
       }
       else if(auction.auctionType == 'silent bid'){
         console.log("bidmade")
@@ -249,11 +248,6 @@ const Auction  = () => {
 
    }
 
-    
-
-  // if(auction){
-  //  console.log(auction)
-  // }
  return (
    <>
    <div className="auction-page">
@@ -332,7 +326,7 @@ const Auction  = () => {
          {viewWinner && ( <span> 
           
            {auction.auctionType !== 'vickery' ? `Winning Bid : $ ${bidWinner}` : `Winning Bid: ${bidWinner.bidValue} - Amount to Pay : ${bidWinner.bidToPay}`}
-            {/* ${ auction.leadingBid? auction.leadingBid[0].bidValue : ""}   */}
+         
            </span>)
           }
        </div>
