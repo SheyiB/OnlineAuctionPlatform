@@ -2,6 +2,8 @@ import {Auction, AuctionType} from '../models/auction.model'
 
 import {EventEmitter} from 'events'
 
+import {fileUpload} from '../helpers/fileUpload'
+
 export const eventEmmitter = new EventEmitter(); 
 
 export class AuctionServie{
@@ -12,9 +14,14 @@ export class AuctionServie{
         this.eventEmitter = eventEmitter
     }
 
-    createAuction (body: AuctionType ){
+    createAuction (body: AuctionType, filePath: any ){
         return new Promise<{auction: AuctionType}>(async(resolve, reject) =>{
             try{    
+                
+                const imagePath = await fileUpload(filePath)
+
+                body.image = imagePath
+
                 const auction: AuctionType = await Auction.create(body);
 
                 this.eventEmitter.emit('auctionCreated', auction);
