@@ -17,7 +17,7 @@ initializeApp(firebaseConfig )
 
 const storage = getStorage()
 
-const upload = multer({ storage: multer.memoryStorage()});
+
 
 export const fileUpload = async (file:any) => {
 

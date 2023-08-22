@@ -13,11 +13,13 @@ const Auction = new AuctionServie(eventEmitter);
 
 auctionEventHandler.registerEventHandlers();
 
+
+
 export const createAuction = async (req: Request, res: Response) =>{
     try{
         console.log(req.body)
                
-        const auction = await Auction.createAuction(req.body);
+        const auction = await Auction.createAuction(req.body, req.file);
         
         return res.status(201).json(auction)
     }  catch(e : any){

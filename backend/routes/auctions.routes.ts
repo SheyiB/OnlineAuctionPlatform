@@ -1,13 +1,20 @@
 import express from 'express'
 
+
+import multer from 'multer'
+
 import { createAuction, deleteAuction, getAuction, getMarketAuctions, updateAuction } from '../controllers/auction'
 
 export const auctionRouter = express.Router();
 
 import {marketRouter} from './market.routes'
 
+
+const upload = multer({ storage: multer.memoryStorage()});
+
+
 auctionRouter.route('/')
-    .post(createAuction)
+    .post(upload.single('file'),createAuction)
 ;
 
 auctionRouter.route('/:id')
