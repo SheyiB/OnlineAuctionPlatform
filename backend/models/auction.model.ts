@@ -46,19 +46,17 @@ auctionSchema.pre('save', function (next) {
     // Ensure duration is available and greater than zero
     if (this.duration && this.duration > 0) {
       const { date, duration } = this;
-      console.log(date)
       const durationInMilliseconds = duration * 3600000; // Convert duration to milliseconds
   
       // Get the time zone offset in minutes and convert it to milliseconds
       const timezoneOffsetMilliseconds = date.getTimezoneOffset() * 60000;
   
       // Calculate the endDate, considering the time zone offset
-      console.log(date.getTime(), durationInMilliseconds, timezoneOffsetMilliseconds)
       const endDate = new Date(date.getTime() + durationInMilliseconds);
       this.endDate = endDate;
       this.date = date;
 
-      console.log(date, " end on ", endDate)
+      
     }
   
     next();
