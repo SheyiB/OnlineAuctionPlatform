@@ -1,12 +1,17 @@
 import { resolve } from 'path'
 import {Market, MarketType} from '../models/market.model'
 
+import {fileUpload} from '../helpers/fileUpload'
 
 export class MarketServie{
 
-    createMarket (body: MarketType ){
+    createMarket (body: MarketType, filePath: any ){
         return new Promise<{market: MarketType}>(async(resolve, reject) =>{
             try{
+                const imagePath = await fileUpload(filePath)
+
+                body.image = imagePath
+
                 const market: MarketType = await Market.create(body);
 
                 return resolve({market})

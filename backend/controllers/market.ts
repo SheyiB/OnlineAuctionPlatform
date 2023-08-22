@@ -6,7 +6,7 @@ const Market = new MarketServie();
 
 export const createMarket = async (req: Request, res: Response) =>{
     try{
-        const market = await Market.createMarket(req.body);
+        const market = await Market.createMarket(req.body, req.file);
         
         return res.status(201).json(market)
     }  catch(e : any){

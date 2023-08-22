@@ -1,11 +1,17 @@
 import express from 'express'
 
+import multer from 'multer'
+
 import {createMarket, getMarket , deleteMarket, updateMarket, getAllMarkets, getAuctioneerMarket } from '../controllers/market'
 
 export const marketRouter = express.Router();
 
+
+const upload = multer({ storage: multer.memoryStorage()});
+
+
 marketRouter.route('/')
-    .post(createMarket)
+    .post(upload.single('file') ,createMarket)
     .get(getAllMarkets)
 ;
 
