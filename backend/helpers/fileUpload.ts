@@ -1,7 +1,9 @@
 import { getStorage, ref, getDownloadURL, uploadBytesResumable} from 'firebase/storage'
 import { initializeApp } from "firebase/app";
 
-import multer from 'multer'
+import * as dotenv from "dotenv";
+
+dotenv.config();
 
 const firebaseConfig = {
     apiKey: process.env.apiKey,

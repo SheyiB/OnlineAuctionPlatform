@@ -16,9 +16,7 @@ auctionEventHandler.registerEventHandlers();
 
 
 export const createAuction = async (req: Request, res: Response) =>{
-    try{
-        console.log(req.body)
-               
+    try{            
         const auction = await Auction.createAuction(req.body, req.file);
         
         return res.status(201).json(auction)
