@@ -10,7 +10,7 @@ export interface AuctioneerType{
     phone: number;
     password: string;
     market: Types.ObjectId[];
-
+    verified: boolean
 }
 
 
@@ -33,6 +33,7 @@ const AuctioneerSchema = new Schema<AuctioneerType>({
     phone: {type: Number, required: true},
     password: {type: String, required: true},
     market: [{type: Schema.Types.ObjectId, ref: 'Market' }],
+    verified: {type: Boolean, default: false}
 
 },
 {
