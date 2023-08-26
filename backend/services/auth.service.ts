@@ -28,6 +28,36 @@ export class AuthService{
     }
 
 
+    login (body: AuctioneerLogin) {
+        return new Promise<{auctioneer: string, token: string}>(async(resolve, reject) => {
+            try{
+
+                const {email, password} = body;
+
+                const auctioneer : AuctioneerData | any= await Auctioneer.findOne({email: email}).select('+password');
+
+
+                if (!auctioneer) reject('FALSE-INFO!');
+
+ 				const isMatch =  await auctioneer.matchPassword(password); 
+                if(!isMatch) reject({status: 401, message:'Invalid Inforamtion Supplied!'});
+
+                auctioneer.password = undefined;
+
+                const token: string = auctioneer.getSignedJwtToken();
+
+                if(!token) reject ('Could not Sign In Auctioneer');
+
+
+
+                resolve({auctioneer, token} )
+            }
+            catch(e : any){
+                e.source = 'Get Auctioneer Service';
+                return reject(e)
+            }
+        })
+    }
 
     async verifyEmail (link: string){
         try{
@@ -36,6 +66,7 @@ export class AuthService{
             //Ensure ID is valid
 
             //Update Databse to show Account has been verified
+
         }
 
         catch(e){
