@@ -66,7 +66,7 @@ export class AuthService{
             //Ensure ID is valid
 
             //Update Databse to show Account has been verified
-
+            await Auctioneer.findByIdAndUpdate(id, {verfied: true }, {runValidators: true, new: true})
         }
 
         catch(e){
