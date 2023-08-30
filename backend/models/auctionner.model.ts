@@ -16,7 +16,8 @@ export interface AuctioneerType{
 
 export interface AuctioneerData extends AuctioneerType {
     getSignedJwtToken : () => string;
-    matchPassword : () => string;    
+    matchPassword : () => string;
+    getEmailVerifyToken : () => string;    
 }
 
 
@@ -57,6 +58,14 @@ AuctioneerSchema.methods.getSignedJwtToken = function() {
         expiresIn: process.env.JWT_EXPIRE
     })
 }
+
+// For Session Mgt -> Create a method that creates a Signed JWT using the user id for session Mgt
+AuctioneerSchema.methods.getEmailVerifyToken = function() {
+    return jwt.sign( {id: this._id}, process.env.JWT_VERIFY_SECRET!, {
+        expiresIn: process.env.JWT_EXPIRE
+    })
+}
+
 
 // A Method that Checkes if Entered Password equals Hashed Password
 AuctioneerSchema.methods.matchPassword = async function(enteredPassword: string ){

@@ -11,8 +11,12 @@ export class AuthService{
                     return reject({code : 400, message: "Auctioneer Exist!"})
                 }
                 const auctioneer: AuctioneerData = await Auctioneer.create(body);
-                
+
+                const verfiyToken = auctioneer.getEmailVerifyToken()
                 const token = auctioneer.getSignedJwtToken();
+
+
+                //Send mail based on verify-token s
 
                 return resolve({auctioneer, token});
             }
@@ -63,7 +67,7 @@ export class AuthService{
         try{
             //Decode String
 
-            const id = jwt.verify(link, process.env.JWT_SECRET!)
+            const id = jwt.verify(link, process.env.JWT_VERIFY_SECRET!)
 
             //Ensure ID is valid
             const auctionnerExsits = await Auctioneer.findById(id)
