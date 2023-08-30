@@ -1,5 +1,5 @@
 import {Auctioneer, AuctioneerType,AuctioneerData, AuctioneerLogin} from '../models/auctionner.model'
-
+import jwt from 'jsonwebtoken';
 
 export class AuthService{
 	signUp (body: AuctioneerType){
@@ -63,14 +63,29 @@ export class AuthService{
         try{
             //Decode String
 
-            //Ensure ID is valid
+            const id = jwt.verify(link, process.env.JWT_SECRET!)
 
+            //Ensure ID is valid
+            const auctionnerExsits = await Auctioneer.findById(id)
+
+            if(auctionnerExsits){
             //Update Databse to show Account has been verified
-            await Auctioneer.findByIdAndUpdate(id, {verfied: true }, {runValidators: true, new: true})
+            await Auctioneer.findByIdAndUpdate(id, {verfied: true }, {runValidators: true, new: true})                
+
+            return ({"status": 200, "message" : "User successfully Verfied"})
+            }
+
+            else{
+                return ({"status": 400, "message" : "Invalid Token"})
+
+            }            
+
         }
 
-        catch(e){
+        catch(e:any){
             
+            return ({"status": 500, "message" : e.message})
+
         }
     }
 }
