@@ -2,7 +2,7 @@ import {Auctioneer, AuctioneerType,AuctioneerData, AuctioneerLogin} from '../mod
 import jwt from 'jsonwebtoken';
 
 export class AuthService{
-	signUp (body: AuctioneerType){
+	/**signUp (body: AuctioneerType){
         return new Promise<{auctioneer: AuctioneerType, token: string}>(async(resolve, reject) => {
             try{
                 let existingUser = await Auctioneer.find({email : body.email})
@@ -10,8 +10,8 @@ export class AuthService{
                 if(existingUser.length > 0){
                     return reject({code : 400, message: "Auctioneer Exist!"})
                 }
+                
                 const auctioneer: AuctioneerData = await Auctioneer.create(body);
-
                 const verfiyToken = auctioneer.getEmailVerifyToken()
                 const token = auctioneer.getSignedJwtToken();
 
@@ -30,8 +30,38 @@ export class AuthService{
             }
         })
     }
+    **/
+    async signUp(body: AuctioneerType): Promise<{ auctioneer: AuctioneerType; token: string }> {
+        try {
+            // Check if an auctioneer with the same email already exists
+            const existingUser = await Auctioneer.find({ email: body.email });
 
+            if (existingUser.length > 0) {
+                throw new Error('Auctioneer already exists');
+            }
 
+            // Create a new auctioneer
+            const auctioneer: AuctioneerData = await Auctioneer.create(body);
+
+            // Generate email verification token and JWT token
+            const verifyToken = auctioneer.getEmailVerifyToken();
+            const token = auctioneer.getSignedJwtToken();
+
+            // Send an email with the verification token (implementation needed)
+
+            return { auctioneer, token };
+        } catch (error:any) {
+            if (error.message.includes('validation failed')) {
+                // Handle validation errors gracefully
+                throw new Error('Invalid input data');
+            }
+
+            // Add source information to the error for better debugging
+            error.source = 'AuthService - signUp';
+
+            throw error; // Re-throw the error for the caller to handle
+        }
+    }
     login (body: AuctioneerLogin) {
         return new Promise<{auctioneer: string, token: string}>(async(resolve, reject) => {
             try{

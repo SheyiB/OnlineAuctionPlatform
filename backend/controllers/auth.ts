@@ -32,3 +32,15 @@ export const login = async (req: Request, res: Response) =>{
             return res.status(e.status? e.status : 500).json({success: false, message: e.message})            
     }
 }
+
+export const verify = async (req: Request, res: Response) =>{
+    try{
+                
+        const {message,status } = await auth.verifyEmail(req.params.id);       
+        
+        return res.status(201).json({message});
+    }  
+    catch(e: any) {
+            return res.status(e.status? e.status : 500).json({success: false, message: e.message})            
+    }
+}
