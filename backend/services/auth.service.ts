@@ -2,35 +2,35 @@ import {Auctioneer, AuctioneerType,AuctioneerData, AuctioneerLogin} from '../mod
 import jwt from 'jsonwebtoken';
 
 export class AuthService{
-	/**signUp (body: AuctioneerType){
-        return new Promise<{auctioneer: AuctioneerType, token: string}>(async(resolve, reject) => {
-            try{
-                let existingUser = await Auctioneer.find({email : body.email})
+	// ssignUp (body: AuctioneerType){
+    //     return new Promise<{auctioneer: AuctioneerType, token: string}>(async(resolve, reject) => {
+    //         try{
+    //             let existingUser = await Auctioneer.find({email : body.email})
 
-                if(existingUser.length > 0){
-                    return reject({code : 400, message: "Auctioneer Exist!"})
-                }
+    //             if(existingUser.length > 0){
+    //                 return reject({code : 400, message: "Auctioneer Exist!"})
+    //             }
                 
-                const auctioneer: AuctioneerData = await Auctioneer.create(body);
-                const verfiyToken = auctioneer.getEmailVerifyToken()
-                const token = auctioneer.getSignedJwtToken();
+    //             const auctioneer: AuctioneerData = await Auctioneer.create(body);
+    //             const verfiyToken = auctioneer.getEmailVerifyToken()
+    //             const token = auctioneer.getSignedJwtToken();
 
 
-                //Send mail based on verify-token s
+    //             //Send mail based on verify-token s
 
-                return resolve({auctioneer, token});
-            }
-            catch (e: any){
-                if(e.message.includes('validation failed')){
-                    return reject({code: 400, message: e.message})
-                }
+    //             return resolve({auctioneer, token});
+    //         }
+    //         catch (e: any){
+    //             if(e.message.includes('validation failed')){
+    //                 return reject({code: 400, message: e.message})
+    //             }
                 
-                e.source = 'Sign-Up Service';
-                return reject(e)
-            }
-        })
-    }
-    **/
+    //             e.source = 'Sign-Up Service';
+    //             return reject(e)
+    //         }
+    //     })
+    // }
+
     async signUp(body: AuctioneerType): Promise<{ auctioneer: AuctioneerType; token: string }> {
         try {
             // Check if an auctioneer with the same email already exists
@@ -62,6 +62,7 @@ export class AuthService{
             throw error; // Re-throw the error for the caller to handle
         }
     }
+
     login (body: AuctioneerLogin) {
         return new Promise<{auctioneer: string, token: string}>(async(resolve, reject) => {
             try{
