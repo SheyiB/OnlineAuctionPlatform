@@ -1,4 +1,4 @@
-import {AuctionServie} from '../services/auction.service';
+import {AuctionServie} from '../services/auction.service'
 
 import { EventEmitter} from 'events';
 

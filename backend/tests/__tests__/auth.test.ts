@@ -1,7 +1,6 @@
 import mongoose from "mongoose" 
 import request from "supertest"
-import {app} from "../server"
-
+import {app} from "../src/server"
 
 import {config} from 'dotenv'
 
@@ -16,9 +15,19 @@ afterEach(async () => {
 })
 
 
+// "image" : "../assets/pic.jpg",
+// "item" : "Thors Hammer",
+// "auctionType" : "vickery",
+// "category" : "Rare",
+// "startingPrice" : 0,
+// "date" : "12-08-2023",
+// "market" : "2j13399dnnnd3i9323d",
+// "duration" : 1,
+// "details" : "This is Thor's Hammer gotten from Asgard!"
+
 describe("GET /api/signup", ()=>{
     it("should signup User", async () => {
-        const res = await request(app).post("http://localhost:8080/auction-api/auction").send({
+        const res = await request(app).post("http://localhost:8080/auction-api/auth/signUp").send({
         "firstname" : "John",
         "lastname" : "Doe",
         "email" : "john@doe.com",

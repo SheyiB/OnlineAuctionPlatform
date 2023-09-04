@@ -1,6 +1,6 @@
 import mongoose from "mongoose" 
 import request from "supertest"
-import {app} from "../server"
+import {app} from "../src/server"
 
 import {config} from 'dotenv'
 
