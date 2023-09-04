@@ -10,7 +10,6 @@ import {authRouter} from './routes/auth.routes'
 import {marketRouter} from './routes/market.routes'
 import {auctionRouter} from './routes/auctions.routes'
 import {bidRouter} from './routes/bids.routes'
-import {auctioneerRouter} from './routes/auctioneer.routes'
 
 //setup config
 dotenv.config();
@@ -41,7 +40,6 @@ app.use('/auction-api/auth',authRouter)
 app.use('/auction-api/market',marketRouter)
 app.use('/auction-api/auction', auctionRouter)
 app.use('/auction-api/bids', bidRouter)
-app.use('/auction-api/auctioneer', auctioneerRouter)
 
 
 app.get('/*', (req, res)=>{
