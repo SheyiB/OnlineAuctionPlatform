@@ -63,8 +63,8 @@ export class AuthService{
         }
     }
 
-    login (body: AuctioneerLogin) {
-        return new Promise<{auctioneer: string, token: string}>(async(resolve, reject) => {
+        async login (body: AuctioneerLogin):Promise<{auctioneer: string; token: string}> {
+        
             try{
 
                 const {email, password} = body;
@@ -72,28 +72,27 @@ export class AuthService{
                 const auctioneer : AuctioneerData | any= await Auctioneer.findOne({email: email}).select('+password');
 
 
-                if (!auctioneer) reject('FALSE-INFO!');
+                if (!auctioneer) throw new Error ('FALSE-INFO!');
 
  				const isMatch =  await auctioneer.matchPassword(password); 
-                if(!isMatch) reject({status: 401, message:'Invalid Inforamtion Supplied!'});
+                if(!isMatch) throw new Error ('Invalid Inforamtion Supplied!')
 
                 auctioneer.password = undefined;
 
                 const token: string = auctioneer.getSignedJwtToken();
 
-                if(!token) reject ('Could not Sign In Auctioneer');
+                if(!token) throw new Error  ('Could not Sign In Auctioneer');
 
 
 
-                resolve({auctioneer, token} )
+                return ({auctioneer, token} )
             }
             catch(e : any){
                 e.source = 'Get Auctioneer Service';
-                return reject(e)
+                throw (e)
             }
-        })
-    }
-
+        }
+        
     async verifyEmail (link: string){
         try{
             //Decode String
