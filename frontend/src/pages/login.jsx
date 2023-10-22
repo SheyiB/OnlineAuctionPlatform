@@ -3,8 +3,8 @@ import { Link , useNavigate } from 'react-router-dom';
 import {verify} from 'jsonwebtoken-esm'
 import './login.css'; 
 
-const apiUrl = import.meta.env.VITE_APP_API_URL;
-const apiKey = import.meta.env.VITE_APP_API_KEY;
+const apiUrl = import.meta.env.VITE_APP_API_LIVE_URL;
+const apiKey = import.meta.env.VITE_APP_API_LIVE_KEY;
 
 
 const Login  = () => {

@@ -4,6 +4,10 @@ import { useNavigate } from 'react-router-dom';
 
 import './signup.css'
 
+
+const apiUrl = import.meta.env.VITE_APP_API_LIVE_URL;
+const apiKey = import.meta.env.VITE_APP_API_LIVE_KEY;
+
 const Signup  = () => {
     const [firstname, setFirstname] = useState('')
     const [lastname, setLastname] = useState('')
@@ -18,7 +22,7 @@ const Signup  = () => {
   const createUser = async(firstname, lastname, email, phone, dob, password) => {
     const newUser = {firstname, lastname, email, phone, dob, password}
     let result;
-    await fetch(`http://localhost:8080/auction-api/auth/signup`,{
+    await fetch(`${apiUrl}auth/signup`,{
             method: 'POST',
             headers: {
                 'Content-type' : 'application/json',
