@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 
 import './signup.css'
@@ -89,6 +89,7 @@ const Signup  = () => {
           <input type="password" className="input-field" onChange={(e) => onChangePassword(e)} /><br/>
           
           <button type="submit" className="submit-button">Sign Up</button>
+          <span> Registered User?  <Link to="/"> Login </Link></span>
         </form>
       </div>
 
